@@ -1,0 +1,7 @@
+# Build artifacts
+*.pdf
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
