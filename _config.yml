@@ -1,0 +1,9 @@
+title: Context Engineering
+description: A course on managing what goes into a language model's context window
+theme: jekyll-theme-primer
+exclude:
+  - Dockerfile
+  - build
+  - header.tex
+  - metadata.yaml
+  - "*.pdf"
