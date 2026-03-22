@@ -131,14 +131,14 @@ Just as Erlang builds hierarchies of supervisors, complex agent systems can buil
 
 ```
 Orchestrator (top-level)
-├── Feature Agent (supervisor)
-│   ├── Code Writer (worker)
-│   ├── Test Runner (worker)
-│   └── Reviewer (worker)
-├── Feature Agent (supervisor)
-│   ├── Code Writer (worker)
-│   └── Test Runner (worker)
-└── Integration Test Agent (worker)
+|-- Feature Agent (supervisor)
+|   |-- Code Writer (worker)
+|   |-- Test Runner (worker)
+|   \-- Reviewer (worker)
+|-- Feature Agent (supervisor)
+|   |-- Code Writer (worker)
+|   \-- Test Runner (worker)
+\-- Integration Test Agent (worker)
 ```
 
 Each supervisor manages its workers. If a worker fails, the supervisor handles it. If the supervisor can't handle it, it escalates to the orchestrator.

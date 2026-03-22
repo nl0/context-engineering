@@ -23,10 +23,10 @@ Modules are in `modules/` and meant to be read sequentially:
 
 ## Building the PDF
 
-The build script assembles all modules into a single markdown file, then runs pandoc + tectonic inside Docker to produce a ~46-page PDF. Requires Docker and [uv](https://docs.astral.sh/uv/).
+The build script assembles all modules into a single markdown file, then runs pandoc + tectonic inside Docker to produce a ~50-page PDF. Requires Docker.
 
 ```bash
-uv run build_pdf.py
+./build
 ```
 
 ## How this course was built

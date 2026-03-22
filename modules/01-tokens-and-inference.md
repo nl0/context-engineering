@@ -44,8 +44,6 @@ Consider a few concrete cases. The string `"Hello, world!"` typically becomes 4 
 
 Get in the habit of measuring. Don't guess token counts — compute them.
 
----
-
 ## Lesson 1.2: Inference Is Stateless
 
 ### The fundamental truth
@@ -99,16 +97,12 @@ First, **context is a finite, depletable resource** — not free storage. Every 
 
 These numbers look generous. But as we'll see in [Module 2](./02-context-window-size.md), they are marketing numbers — not engineering reality. Effective context is always smaller than advertised context.
 
----
-
 ## Key Takeaways
 
 - **Tokens are the currency of context.** Everything is measured in tokens.
 - **1 token ≈ 4 English characters.** But format matters enormously — JSON costs 3-5x more than plain text for the same data.
 - **Inference is stateless.** The messages array is replayed in full on every call.
 - **Context is a finite resource** that gets more expensive with every exchange.
-
----
 
 ## References
 

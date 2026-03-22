@@ -108,7 +108,7 @@ System prompt:               −1,500
 Harness prompt:              −4,000
 Project context:             −1,500
 Tool definitions (20 tools): −6,000
-────────────────────────────────────────
+----------------------------------------
 Available for conversation:  67,000 tokens
 ```
 

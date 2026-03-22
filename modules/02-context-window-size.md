@@ -72,7 +72,7 @@ System prompt:              −1,500
 Harness prompt:             −3,000
 CLAUDE.md:                  −2,000
 Tool definitions (15 tools): −5,000
-─────────────────────────────────────
+-------------------------------------
 Effective budget:           68,500 tokens
 ```
 

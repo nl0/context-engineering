@@ -57,15 +57,15 @@ Each iteration: agent reads the spec + plan, picks the most important unchecked 
 
 ```
 project-root/
-├── loop.sh                    # Bash orchestrator (mode selection, iteration limits)
-├── PROMPT_plan.md             # Planning mode instructions
-├── PROMPT_build.md            # Building mode instructions
-├── AGENTS.md                  # Operational guide (~60 lines max)
-├── IMPLEMENTATION_PLAN.md     # Living state — checkboxes, progress, notes
-├── specs/                     # One requirement file per topic
-│   ├── authentication.md
-│   └── data-model.md
-└── src/
+|-- loop.sh                    # Bash orchestrator (mode selection, iteration limits)
+|-- PROMPT_plan.md             # Planning mode instructions
+|-- PROMPT_build.md            # Building mode instructions
+|-- AGENTS.md                  # Operational guide (~60 lines max)
+|-- IMPLEMENTATION_PLAN.md     # Living state — checkboxes, progress, notes
+|-- specs/                     # One requirement file per topic
+|   |-- authentication.md
+|   \-- data-model.md
+\-- src/
 ```
 
 ## Lesson 7.3: Specs and Plans — The Persistent Memory
