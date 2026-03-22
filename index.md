@@ -1,9 +1,3 @@
----
-layout: default
-title: Home
-nav_order: 0
----
-
 # Context Engineering
 
 > Master the art of managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies.
@@ -79,13 +73,13 @@ The techniques in this course — from token budgeting to sub-agent isolation to
 - **Sequential**: Modules build on each other. Module 1's token economics inform Module 2's budget calculations, which inform Module 3's slot analysis, and so on.
 - **Reference**: Each module is self-contained enough to revisit independently. Cross-references link to prerequisite concepts.
 - **Practical**: Every concept is tied to concrete numbers, real examples, and actionable patterns. No theory without application.
-- **PDF**: The full course is available as a [PDF](https://github.com/nl0/context-engineering/raw/main/context-engineering-course.pdf) for offline reading.
+- **PDF**: The full course is available as a [PDF download](/Context-Engineering.pdf) for offline reading.
 
 ---
 
 ## Credits
 
-Written by [Claude](https://claude.ai) (Anthropic), directed and edited by a human author. Course outline from [Latent Patterns](https://latentpatterns.com/courses/context-engineering). See [publication history](./history.md) for details.
+Written by [Claude](https://claude.ai) (Anthropic), directed and edited by a human author. Course outline from [Latent Patterns](https://latentpatterns.com/courses/context-engineering). See [publication history](history.md) for details.
 
 Licensed under [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
 

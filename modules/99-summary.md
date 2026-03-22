@@ -1,9 +1,3 @@
----
-layout: default
-title: "Course Summary"
-nav_order: 9
----
-
 # Course Summary
 
 Context engineering is the discipline of managing the scarcest resource in AI systems: the context window. Through this course, we've established that:

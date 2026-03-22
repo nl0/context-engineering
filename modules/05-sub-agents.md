@@ -1,9 +1,3 @@
----
-layout: default
-title: "5. Sub-Agents"
-nav_order: 5
----
-
 # Module 5: Sub-Agents — Managed Runtimes for AI
 
 ## Lesson 5.1: Sub-Agents Are Not About Personas

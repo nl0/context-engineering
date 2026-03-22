@@ -1,9 +1,3 @@
----
-layout: default
-title: "3. The Messages Array"
-nav_order: 3
----
-
 # Module 3: Anatomy of the Messages Array
 
 This module walks through the messages array slot by slot, from index 0 to the end. Think of it as a memory layout — each slot has a purpose and a cost.
@@ -108,15 +102,14 @@ After system prompt, harness, project context, and tool definitions are allocate
 
 Revisiting the budget calculation from [Module 2](./02-context-window-size.md), here's what a heavier tool setup looks like:
 
-```
-Smart zone (200K × 0.4):    80,000 tokens
-System prompt:               −1,500
-Harness prompt:              −4,000
-Project context:             −1,500
-Tool definitions (20 tools): −6,000
-----------------------------------------
-Available for conversation:  67,000 tokens
-```
+| Allocation | Tokens |
+|---|---:|
+| Smart zone (200K × 0.4) | 80,000 |
+| System prompt | −1,500 |
+| Harness prompt | −4,000 |
+| Project context | −1,500 |
+| Tool definitions (20 tools) | −6,000 |
+| **Available for conversation** | **67,000** |
 
 With 67,000 tokens of real budget, your initial user prompt matters. A 500-token prompt leaves 66,500 for conversation and tool results. A 5,000-token prompt (pasting a large file inline) leaves 62,000. If your first prompt is 20,000 tokens (a whole codebase dump), you've used 30% of your budget before the first response.
 

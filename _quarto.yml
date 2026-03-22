@@ -1,0 +1,56 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "Context Engineering"
+  subtitle: "Master the art of managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies."
+  author: "Based on the course outline from latentpatterns.com"
+  date: "March 2026"
+  date-format: "MMMM YYYY"
+  page-navigation: true
+  search: true
+  repo-url: https://github.com/nl0/context-engineering
+  repo-actions: [source]
+  downloads: [pdf]
+  chapters:
+    - index.md
+    - part: "Foundations"
+      chapters:
+        - modules/01-tokens-and-inference.md
+        - modules/02-context-window-size.md
+    - part: "The Messages Array"
+      chapters:
+        - modules/03-messages-array.md
+        - modules/04-tool-calling.md
+    - part: "Scaling Patterns"
+      chapters:
+        - modules/05-sub-agents.md
+        - modules/06-message-passing.md
+    - part: "Architecture"
+      chapters:
+        - modules/07-ralph-wiggum-loop.md
+        - modules/08-context-management.md
+    - modules/99-summary.md
+    - history.md
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+  pdf:
+    documentclass: report
+    papersize: letter
+    fontsize: 11pt
+    toc-depth: 2
+    geometry:
+      - top=1in
+      - bottom=1in
+      - left=1in
+      - right=1in
+    linestretch: 1.3
+    colorlinks: true
+    linkcolor: "black"
+    urlcolor: "blue"
+    highlight-style: kate

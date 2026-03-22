@@ -1,9 +1,3 @@
----
-layout: default
-title: "6. Message Passing"
-nav_order: 6
----
-
 # Module 6: Message Passing — The Erlang OTP of AI
 
 ## Lesson 6.1: Context Windows Are Actors

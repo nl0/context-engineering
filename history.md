@@ -1,9 +1,3 @@
----
-layout: default
-title: Publication History
-nav_order: 10
----
-
 # Publication History
 
 ## Credits

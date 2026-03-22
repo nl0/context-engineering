@@ -1,9 +1,3 @@
----
-layout: default
-title: "7. The Ralph Wiggum Loop"
-nav_order: 7
----
-
 # Module 7: The Ralph Wiggum Loop
 
 ## Lesson 7.1: What Is the Ralph Wiggum Loop?

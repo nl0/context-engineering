@@ -3,7 +3,7 @@
 A course on managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies.
 
 **Read online:** [nl0.github.io/context-engineering](https://nl0.github.io/context-engineering/)
-**Download PDF:** [context-engineering-course.pdf](./context-engineering-course.pdf)
+**Download PDF:** available on the website sidebar
 
 Based on the outline from [latentpatterns.com/courses/context-engineering](https://latentpatterns.com/courses/context-engineering), fleshed out with research into practitioner experiences, academic papers, and production systems.
 
@@ -20,13 +20,15 @@ Based on the outline from [latentpatterns.com/courses/context-engineering](https
 | 7 | The Ralph Wiggum Loop | Crash-only agent design, fresh-context iteration, specs as memory |
 | 8 | Context Management | malloc without free, compaction dangers, Write/Select/Compress/Isolate |
 
-## Building the PDF
+## Building locally
 
-Requires Docker. Concatenates all modules inside a Docker container and runs pandoc + tectonic.
+Requires [Quarto](https://quarto.org/docs/get-started/) and TinyTeX (`quarto install tinytex`).
 
 ```bash
-./build
+quarto render
 ```
+
+Outputs HTML site to `_site/` and PDF. Pushes to GitHub trigger automatic builds via GitHub Actions.
 
 ## Credits
 

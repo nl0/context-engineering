@@ -1,9 +1,3 @@
----
-layout: default
-title: "1. Tokens and Inference"
-nav_order: 1
----
-
 # Module 1: Tokens and Inference
 
 ## Lesson 1.1: What Are Tokens?

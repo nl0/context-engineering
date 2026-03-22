@@ -1,9 +1,3 @@
----
-layout: default
-title: "8. Context Management"
-nav_order: 8
----
-
 # Module 8: Context Management Strategies
 
 ## Lesson 8.1: The `malloc` Without `free`

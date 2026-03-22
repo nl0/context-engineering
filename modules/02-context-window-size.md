@@ -1,9 +1,3 @@
----
-layout: default
-title: "2. Context Window Size"
-nav_order: 2
----
-
 # Module 2: The Real Size of Your Context Window
 
 ## Lesson 2.1: Marketing Numbers vs. Engineering Reality
@@ -66,21 +60,18 @@ Several categories of **fixed allocations** consume tokens on every request. Sys
 
 The budget formula brings this together:
 
-```
-Effective budget = (Advertised window × 0.4) − Fixed allocations
-```
+**Effective budget = (Advertised window × 0.4) − Fixed allocations**
 
 Here's a worked example with Claude Sonnet 4.6 (200K window):
 
-```
-Smart zone:     200,000 × 0.4 = 80,000 tokens
-System prompt:              −1,500
-Harness prompt:             −3,000
-CLAUDE.md:                  −2,000
-Tool definitions (15 tools): −5,000
--------------------------------------
-Effective budget:           68,500 tokens
-```
+| Allocation | Tokens |
+|---|---:|
+| Smart zone (200K × 0.4) | 80,000 |
+| System prompt | −1,500 |
+| Harness prompt | −3,000 |
+| CLAUDE.md | −2,000 |
+| Tool definitions (15 tools) | −5,000 |
+| **Effective budget** | **68,500** |
 
 That's your real budget for conversation + tool results + reasoning. It sounds like a lot — until a single file read returns 5,000 tokens, a test run dumps 10,000 tokens, and you're 10 exchanges deep. Budget awareness must be designed into your agent, not bolted on after. This is why sub-agents ([Module 5](./05-sub-agents.md)) and fresh-context patterns ([Module 7](./07-ralph-wiggum-loop.md)) exist.
 
