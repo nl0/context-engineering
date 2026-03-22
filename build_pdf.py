@@ -5,8 +5,9 @@
 """Build a PDF book from the course markdown files.
 
 Usage:
-    uv run build_pdf.py          # requires pandoc + tectonic installed locally
-    uv run build_pdf.py --docker  # uses Docker (no local dependencies needed)
+    uv run build_pdf.py
+
+Requires Docker.
 """
 
 import subprocess
@@ -50,53 +51,7 @@ def build_combined_markdown() -> str:
     return "\n\n".join(parts)
 
 
-def run_pandoc_local(md_path: str) -> int:
-    """Run pandoc locally (requires pandoc + tectonic on PATH)."""
-    cmd = [
-        "pandoc", md_path,
-        "-o", str(OUTPUT),
-        "--pdf-engine=tectonic",
-        "--standalone",
-        f"--include-in-header={HEADER_TEX}",
-    ]
-    print(f"Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-    if result.returncode != 0:
-        print(f"pandoc stderr:\n{result.stderr}", file=sys.stderr)
-    return result.returncode
-
-
-def run_pandoc_docker(md_path: str) -> int:
-    """Run pandoc via Docker (no local dependencies needed)."""
-    print(f"Building Docker image '{IMAGE_NAME}'...")
-    build = subprocess.run(
-        ["docker", "build", "-t", IMAGE_NAME, str(COURSE_DIR)],
-        capture_output=True, text=True, timeout=600,
-    )
-    if build.returncode != 0:
-        print(f"Docker build failed:\n{build.stderr}", file=sys.stderr)
-        return build.returncode
-
-    md_name = Path(md_path).name
-    cmd = [
-        "docker", "run", "--rm",
-        "-v", f"{COURSE_DIR}:/course",
-        IMAGE_NAME,
-        f"/course/{md_name}",
-        "-o", f"/course/{OUTPUT.name}",
-        "--pdf-engine=xelatex",
-        "--standalone",
-        f"--include-in-header=/course/{HEADER_TEX.name}",
-    ]
-    print(f"Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-    if result.returncode != 0:
-        print(f"pandoc stderr:\n{result.stderr}", file=sys.stderr)
-    return result.returncode
-
-
 def main():
-    use_docker = "--docker" in sys.argv
     combined = build_combined_markdown()
 
     with tempfile.NamedTemporaryFile(
@@ -106,9 +61,34 @@ def main():
         tmp_path = f.name
 
     try:
-        rc = run_pandoc_docker(tmp_path) if use_docker else run_pandoc_local(tmp_path)
-        if rc != 0:
-            return rc
+        # Build Docker image
+        print(f"Building Docker image '{IMAGE_NAME}'...")
+        build = subprocess.run(
+            ["docker", "build", "-t", IMAGE_NAME, str(COURSE_DIR)],
+            capture_output=True, text=True, timeout=600,
+        )
+        if build.returncode != 0:
+            print(f"Docker build failed:\n{build.stderr}", file=sys.stderr)
+            return build.returncode
+
+        # Run pandoc inside container
+        md_name = Path(tmp_path).name
+        cmd = [
+            "docker", "run", "--rm",
+            "-v", f"{COURSE_DIR}:/course",
+            IMAGE_NAME,
+            f"/course/{md_name}",
+            "-o", f"/course/{OUTPUT.name}",
+            "--pdf-engine=tectonic",
+            "--standalone",
+            f"--include-in-header=/course/{HEADER_TEX.name}",
+        ]
+        print(f"Running: {' '.join(cmd)}")
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        if result.returncode != 0:
+            print(f"pandoc stderr:\n{result.stderr}", file=sys.stderr)
+            return result.returncode
+
         size_kb = OUTPUT.stat().st_size / 1024
         print(f"PDF generated: {OUTPUT} ({size_kb:.0f} KB)")
         return 0

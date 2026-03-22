@@ -16,9 +16,7 @@ geometry:
   - bottom=1in
   - left=1in
   - right=1in
-fontfamily: libertinus
-monofont: "Courier New"
-linestretch: 1.3
+linestretch: 1.35
 toc: true
 toc-depth: 2
 highlight-style: kate

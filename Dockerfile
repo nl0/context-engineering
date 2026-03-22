@@ -1,16 +1,6 @@
-FROM debian:bookworm-slim
+FROM alpine:3.21
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        pandoc \
-        texlive-latex-base \
-        texlive-latex-extra \
-        texlive-latex-recommended \
-        texlive-xetex \
-        texlive-fonts-extra \
-        texlive-fonts-recommended \
-        lmodern \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache pandoc-cli tectonic
 
 WORKDIR /course
 ENTRYPOINT ["pandoc"]
