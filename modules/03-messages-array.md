@@ -86,6 +86,8 @@ This module walks through the messages array slot by slot, from index 0 to the e
   - Long examples (use references to files instead)
   - Anything that rarely applies (retrieve on-demand instead)
 
+- **The ETH Zurich surprise** (2026): A study evaluating AGENTS.md files found that LLM-generated context files actually *decreased* task success rates by ~3% and increased costs by 20%+. Human-written files improved success by ~4% — but only when limited to information the agent genuinely can't infer from the codebase. The takeaway: context files that merely restate discoverable information (architecture overviews, directory structures) add cost without benefit. Include only non-discoverable, operationally significant information: custom build commands, project-specific gotchas, unconventional patterns.
+
 ## Lesson 3.4: Slot 3 — MCP Servers and Agent Skills
 
 - **What MCP (Model Context Protocol) is**: A standard protocol for exposing tools (functions the model can call) and resources (data the model can read) to LLMs. Tool definitions are JSON schemas that describe available functions, their parameters, and expected behavior.
@@ -106,6 +108,8 @@ This module walks through the messages array slot by slot, from index 0 to the e
   - **Eager** (default in most frameworks): All tool definitions are included in every request. Simple, but wasteful if you have many tools and most are rarely used.
   - **Lazy loading**: Start with a minimal tool set. Provide a "discover tools" meta-tool that can load additional tool definitions on demand. Saves tokens but adds latency (extra round trip to discover tools before using them).
   - **Hybrid**: Eagerly load core tools (file read/write, search, execute). Lazy-load specialized tools (database, deployment, specific APIs).
+
+- **Deferred tool loading in practice**: Claude Code implements this concretely via a `ToolSearch` meta-tool. Tools marked with `defer_loading: true` are excluded from the initial prompt entirely — Claude sees only the ToolSearch tool plus core tools. When Claude needs a deferred tool, it searches by keyword; the API returns 3-5 matching tool definitions that auto-expand into full schemas. This auto-enables when MCP tools would consume >10% of context. Results: 85-95% reduction in startup token overhead, and it doesn't break prompt caching (deferred tools aren't in the prefix). At 50+ eagerly-loaded tools, model accuracy for tool selection drops to ~49%; ToolSearch recovers it to ~74%.
 
 - **Designing for token efficiency**:
   - Keep tool descriptions concise

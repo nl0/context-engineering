@@ -96,9 +96,21 @@
 
   Rule of thumb: sub-agents are worth it when the delegated operation would add 2,000+ tokens to the parent context that the parent doesn't need verbatim.
 
+- **Token explosion risk**: Sub-agents save tokens in the *parent* context, but they still consume tokens globally — and parallelism multiplies cost fast:
+  - Practitioners report hitting Claude Pro plan limits in as little as 15 minutes when running 5 parallel sub-agents
+  - Anthropic documents that multi-agent workflows use 4-7x more tokens than single-agent approaches; full Agent Teams architectures can reach ~15x
+  - Information flows only parent↔child, never child↔child — if two sub-agents need to coordinate, the parent must relay messages, adding further token cost on both sides
+
 - **Nesting depth**: Sub-agents can spawn their own sub-agents, but keep it shallow. Each level adds latency and fixed overhead. In practice, 2 levels (parent → child → grandchild) is usually the maximum useful depth.
 
+- **The read vs. write distinction** (Phil Schmid): The most useful heuristic for when multi-agent works comes from Phil Schmid: "The important distinction isn't single vs multi-agent... it is whether your task primarily involves reading or writing."
+  - **Read tasks** (research, analysis, code review, search) parallelize well — sub-agents gather information independently and results combine naturally. Multi-agent shines here.
+  - **Write tasks** (code generation, document authoring, system design) create coordination nightmares — parallel writers make conflicting assumptions that an integrator can't reconcile. Single agent is usually better.
+  - The data backs this up: Google/MIT research found that parallelized write tasks degraded performance by 39-70%, while parallelized read tasks improved performance by 80.9%.
+
 - **The anti-pattern warning** (Cognition/Devin): Cognition, the team behind Devin, published "Don't Build Multi-Agents" — arguing that parallel sub-agents making independent decisions leads to conflicting implicit choices. Their recommendation: sub-agents should only handle **well-defined questions** (like "run these tests"), never substantive decision-making. Keep decision-making centralized in the parent. Use sub-agents for information gathering and execution, not for planning or architectural choices.
+
+  Cognition's **Flappy Bird example** makes this concrete: they asked parallel sub-agents to build the game. One sub-agent built a Mario-style background. Another built a bird that was visually and mechanically inconsistent with that background. The integrator agent couldn't reconcile the conflicting outputs. Root cause: "conflicting assumptions not prescribed upfront." The sub-agents each made reasonable but incompatible creative decisions — exactly the kind of implicit choice that can't be parallelized safely.
 
 ## Key Takeaways
 
@@ -115,6 +127,9 @@
 - Manus. "Context Engineering for AI Agents: Lessons from Building Manus." https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
 - Wu, Q., et al. (2023). "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation." arXiv:2308.08155.
 - Hong, S., et al. (2023). "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework." arXiv:2308.00352.
+- Schmid, P. (2025). "Single vs Multi-Agent System?" https://www.philschmid.de/single-vs-multi-agents
+- Google Research. (2025). "Towards a Science of Scaling Agent Systems." https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/
+- Anthropic. "How We Built Our Multi-Agent Research System." https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 

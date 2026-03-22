@@ -10,6 +10,10 @@
 
 Software developers, ML engineers, and architects who build applications on top of LLMs — especially agent-based systems. You should be comfortable with API calls to language models and have experience (even brief) with tools like Claude Code, Cursor, Copilot, or LangChain.
 
+## Why "Context Engineering"?
+
+The term was popularized in June 2025 by Tobi Lutke (Shopify CEO) — "the art of providing all the context for the task to be plausibly solvable by the LLM" — and Andrej Karpathy, who elaborated: "context engineering is the delicate art and science of filling the context window with just the right information for the next step." It supersedes "prompt engineering" because in production systems, the prompt is the least of your concerns. The real work is managing everything else that goes into context: tool definitions, retrieved documents, conversation history, project conventions, and compaction strategies.
+
 ## What You'll Learn
 
 The context window is the single most important resource in any LLM application. It determines what the model knows, how well it reasons, and when it fails. Most developers treat it as a black box. This course treats it as a system to be engineered.

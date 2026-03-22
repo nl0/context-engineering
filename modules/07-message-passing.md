@@ -79,6 +79,10 @@
   3. **Failure information over success details**: If everything passed, a one-liner is sufficient. Detail the failures.
   4. **Structured over prose**: Structured formats (lists, tables, key-value pairs) are easier for the parent model to parse and reason about.
 
+- **The todo.md attention manipulation pattern** (Manus): Manus discovered a powerful technique for maintaining coherence during long agent runs (~50+ tool calls). Their agents create and continuously update a `todo.md` file throughout execution — checking off completed items and adding new ones as the task evolves. This pushes current objectives into the model's most recent attention span, directly combating the lost-in-the-middle problem. The filesystem serves as what Manus calls "unlimited, persistent, and directly operable" extended context. It's a message the agent sends to its future self, using the filesystem as the medium.
+
+- **The "Agent as Tool" mental model** (Phil Schmid): Rather than thinking of sub-agents as members of an org chart ("the architect agent talks to the coder agent"), treat them as deterministic function calls: `call_planner(goal="...")`. Harness frameworks like Hugging Face's smolagents spin up a temporary sub-agent loop, let it run, and return structured output that's immediately usable by the caller — no different from calling any other tool. This mental model keeps the protocol clean: input in, output out, no ongoing relationship or state to manage.
+
 - **The sub-agent's system prompt as protocol definition**: The system prompt of a sub-agent can formalize the protocol:
   ```
   You are a test runner agent. Execute the requested tests and return
@@ -156,6 +160,8 @@
 - Erlang/OTP Design Principles: https://www.erlang.org/doc/system/design_principles
 - Hewitt, C., Bishop, P., & Steiger, R. (1973). "A Universal Modular ACTOR Formalism for Artificial Intelligence." IJCAI.
 - Agha, G. (1986). *Actors: A Model of Concurrent Computation in Distributed Systems*. MIT Press.
+- Manus. "Context Engineering for AI Agents." https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
+- Schmid, P. (2025). "Context Engineering Part 2." https://www.philschmid.de/context-engineering-part-2
 
 ---
 

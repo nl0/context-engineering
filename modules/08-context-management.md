@@ -37,6 +37,12 @@ The three "memory management" primitives we DO have:
   - ChatGPT: Uses a "memory" system that extracts key facts from conversations
   - LangChain: Offers `ConversationSummaryMemory` that summarizes older turns
 
+- **How compaction actually works mechanically**:
+  - Auto-compact typically fires at ~95% capacity (~167K of a 200K token window) — by the time it triggers, you're already deep in context pressure
+  - `CLAUDE.md` (and similar injected instruction files) survive compaction because they're re-injected fresh from disk on every turn — they're the one thing that persists fully intact
+  - Old file reads, grep results, and command outputs account for 60-80% of the content removed during compaction — these are high-token, low-signal messages once acted upon
+  - Practitioner tip: run `/compact` manually with custom instructions (e.g., `/compact summarize only the to-do items and keep all file paths`) at strategic moments rather than letting auto-compact fire at the worst possible time
+
 - **Why it's dangerous — non-deterministic eviction**: You can't control what the model considers important when summarizing. The model decides what to keep and what to discard. This is fine for casual conversation. It's dangerous for agent workloads where:
   - A specific instruction from 30 messages ago is still critical
   - A file path mentioned early in the conversation is needed later
@@ -85,6 +91,17 @@ If you must compact, don't let the model decide what to keep. You decide.
 - **Counter-intuitive finding**: Manus (the AI agent company) discovered that **failed actions should stay visible** in context. Leaving wrong turns visible improves behavior — the model performs implicit belief updates and avoids repeating the same mistakes. Evict successful tool output, but keep failure traces.
 - **Observation masking** (JetBrains Research, 2025): Instead of summarizing entire turns, keep the agent's reasoning and actions but replace older tool outputs with placeholder text. A rolling window of ~10 turns of full detail, with older observations masked. This achieved 50%+ cost reduction while actually *improving* solve rates by 2.6% — better than LLM summarization, which paradoxically made agents run 13-15% longer.
 - **Implementation**: Maintain a priority tag on each message. When compaction is triggered, only compact messages tagged as evictable.
+
+### The Write/Select/Compress/Isolate Taxonomy (Lance Martin)
+
+A useful framework for reasoning about context management strategies comes from Lance Martin's "Context Engineering for Agents." Every technique maps to one of four primitives:
+
+- **Write**: Save information outside the context window for later retrieval — scratchpads, memory files, persistent state stores
+- **Select**: Retrieve only relevant information into context when needed — RAG, dynamic tool descriptions, filtered search results
+- **Compress**: Retain only essential tokens from what's already in context — summarization, observation masking, trimming tool outputs
+- **Isolate**: Split context across separate components so no single window bears the full load — sub-agents, sandboxed execution environments
+
+The strategies above map cleanly: sub-agent delegation is **Isolate**, the Ralph Wiggum Loop combines **Write** (persist state to file) and **Select** (load only what's needed), priority-based eviction is **Compress**, and the structured stores below are **Write** + **Select**.
 
 ### Strategy 4: Structured Context Stores (Emerging)
 
