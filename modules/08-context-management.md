@@ -1,0 +1,135 @@
+# Module 8: Context Management Strategies
+
+← [Module 7: Message Passing — The Erlang OTP of AI](./07-message-passing.md) | [Course Index →](../index.md)
+
+---
+
+## Lesson 8.1: The `malloc` Without `free`
+
+- **The memory management analogy**: In C, `malloc()` allocates memory and `free()` releases it. Context engineering has `malloc` — you can add messages, tool results, and context to the array. But there is no `free`. Once a message is in the array, it stays there for the rest of the session. (Technically you could remove messages from the array before sending, but most frameworks don't support this, and doing it naively breaks conversational coherence.)
+
+- **Why this matters**: In traditional programming, memory leaks are bugs. In LLM context management, "leaks" are the default behavior. Every tool call, every file read, every error message — they all accumulate. The context only grows.
+
+- **The comparison**:
+  | Operation | Traditional Memory | Context Window |
+  |-----------|-------------------|----------------|
+  | Allocate | `malloc(size)` | Add a message to the array |
+  | Use | Read/write the pointer | Model attends to the message |
+  | Free | `free(ptr)` | Not available |
+  | Garbage collect | Automatic (in GC languages) | Not available |
+  | Leak | Bug — wastes RAM | Default behavior — wastes context |
+  | Out of memory | Process crashes | Model enters dumb zone |
+
+- **The three "memory management" primitives we DO have**:
+  1. **Don't allocate**: Avoid putting things in context that aren't needed (use sub-agents — [Module 6](./06-sub-agents.md))
+  2. **Compact**: Summarize old messages to reduce their token count (lossy — see Lesson 8.2)
+  3. **Reset**: Start a fresh context window with curated state (the Ralph Wiggum Loop — [Module 5](./05-ralph-wiggum-loop.md))
+
+## Lesson 8.2: Why Compaction Is Dangerous
+
+- **What compaction is**: Compaction (also called context compression or summarization) replaces older messages in the array with a shorter summary. For example, 20 messages of conversation (5,000 tokens) might be compressed to a 500-token summary.
+
+- **How current tools do it**:
+  - Claude Code: When context reaches ~80% of the window, it automatically compresses older messages into a summary
+  - ChatGPT: Uses a "memory" system that extracts key facts from conversations
+  - LangChain: Offers `ConversationSummaryMemory` that summarizes older turns
+
+- **Why it's dangerous — non-deterministic eviction**: You can't control what the model considers important when summarizing. The model decides what to keep and what to discard. This is fine for casual conversation. It's dangerous for agent workloads where:
+  - A specific instruction from 30 messages ago is still critical
+  - A file path mentioned early in the conversation is needed later
+  - An error pattern from the first test run needs to inform the fourth test run
+  - A constraint ("never modify the database schema") was stated once and must persist
+
+- **Real failure scenarios**:
+  1. **Lost constraints**: "Use only the existing API endpoints" gets compacted away. The agent creates new endpoints.
+  2. **Lost context**: A critical error message from an earlier tool call is summarized as "encountered some errors." The specific error information is gone.
+  3. **Lost decisions**: "We decided to use approach B because approach A had race conditions." Gets compacted to "using approach B." The next iteration doesn't know why and might revisit approach A.
+  4. **Merged context**: Information from separate tool calls gets merged in the summary, creating false associations.
+
+- **The fundamental problem**: Compaction is lossy compression performed by the same model that's already struggling with context management. You're asking a model that loses information in long contexts to decide what information is safe to discard. This is asking the fox to guard the henhouse.
+
+## Lesson 8.3: Better Strategies
+
+Given the dangers of compaction, what should you actually do?
+
+### Strategy 1: Prevention Over Cure (Sub-Agent Delegation)
+
+The best strategy is to prevent context bloat in the first place.
+- Delegate high-token operations to sub-agents ([Module 6](./06-sub-agents.md))
+- Only receive summaries in the parent context
+- This is like avoiding memory allocation rather than trying to free it later
+
+### Strategy 2: Fresh Context with Curated State (The Ralph Wiggum Loop)
+
+When context accumulation is inevitable, reset deliberately.
+- Write critical state to a persistent file (spec/plan)
+- Start a fresh context window
+- Load only what's needed ([Module 5](./05-ralph-wiggum-loop.md))
+- This is the closest thing to `free()` — you're starting with a clean heap
+
+### Strategy 3: Priority-Based Eviction
+
+If you must compact, don't let the model decide what to keep. You decide.
+- **Protected categories** (never evict):
+  - System prompt and constraints
+  - The current task specification
+  - Active error states being debugged
+  - User-stated requirements and decisions
+- **Evictable categories** (safe to summarize):
+  - Successful tool calls whose results have been acted on
+  - Exploratory reads that didn't lead to action
+  - Verbose output where only the conclusion matters
+- **Implementation**: Maintain a priority tag on each message. When compaction is triggered, only compact messages tagged as evictable.
+
+### Strategy 4: Structured Context Stores (Emerging)
+
+Rather than dumping everything into the linear messages array, use external structured stores:
+- **RAG (Retrieval-Augmented Generation)** as "virtual memory": Store information outside the context window, retrieve it on demand. Like virtual memory paging in an OS — not everything needs to be in "RAM" (context) at once.
+- **Semantic caching**: Cache model responses keyed by semantic similarity of the input. If a similar question was answered recently, reuse the cached answer without re-reading source material.
+- **Session state stores**: External key-value stores where agents can `write("auth_approach", "JWT with refresh tokens")` and later `read("auth_approach")`. Persistent memory that doesn't consume context tokens until retrieved.
+
+### Strategy 5: Context-Aware Architecture Design
+
+Design your agent system to minimize context pressure from the start:
+- **Narrow tool outputs**: Configure tools to return minimal output. A test runner that returns only failures (not full pass/fail logs) saves thousands of tokens.
+- **Pagination**: For large results (search, file listings), return paginated results. Let the agent request more only if needed.
+- **Structured over verbose**: Return JSON or structured data instead of human-readable narratives. Structured data is easier to compress and easier for models to parse.
+- **Time-bounded sessions**: Set a context budget alarm (e.g., at 50% utilization) that triggers the agent to wrap up or delegate remaining work.
+
+## Course Summary
+
+Context engineering is the discipline of managing the scarcest resource in AI systems: the context window. Through this course, we've established that:
+
+1. **Tokens are the currency** — everything has a cost measured in tokens ([Module 1](./01-tokens-and-inference.md))
+2. **Context windows are smaller than advertised** — design for the smart zone, not the marketing number ([Module 2](./02-context-window-size.md))
+3. **The messages array has a fixed-cost structure** — system prompt, harness, project context, and tools consume tokens before your conversation even begins ([Module 3](./03-messages-array.md))
+4. **Tool calls are memory allocations** — they grow context permanently within a session ([Module 4](./04-tool-calling.md))
+5. **Fresh context beats stale context** — the Ralph Wiggum Loop trades continuity for performance ([Module 5](./05-ralph-wiggum-loop.md))
+6. **Sub-agents are context isolators** — delegate work to protect your context budget ([Module 6](./06-sub-agents.md))
+7. **Message passing is the architecture** — design explicit protocols between context windows ([Module 7](./07-message-passing.md))
+8. **Prevention beats compaction** — avoid filling context rather than trying to compress it after the fact ([Module 8](./08-context-management.md))
+
+The central insight: **treat the context window as you would treat memory in a systems programming language — as a finite, precious resource that requires deliberate management.**
+
+## Key Takeaways
+
+- Context management has `malloc` but no `free`. The default is to leak.
+- Compaction is lossy and non-deterministic — the model decides what to discard.
+- Prevention (sub-agents) beats cure (compaction).
+- When you must compact, use priority-based eviction — protect critical context.
+- Emerging patterns (RAG, semantic caching, structured stores) offer alternatives to the linear messages array.
+
+## References
+
+- Kernighan, B. & Ritchie, D. (1988). *The C Programming Language*, 2nd Ed. The `malloc`/`free` analogy originates here.
+- Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+- Packer, C., et al. (2023). "MemGPT: Towards LLMs as Operating Systems." arXiv:2310.08560. https://arxiv.org/abs/2310.08560
+- Anthropic. "Compaction." https://platform.claude.com/docs/en/build-with-claude/compaction
+- Anthropic. "Effective Context Engineering for AI Agents." https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+- Manus. "Context Engineering for AI Agents: Lessons from Building Manus." https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
+- JetBrains Research. (2025). "Efficient Context Management for Coding Agents." https://blog.jetbrains.com/research/2025/12/efficient-context-management/
+- Martin, L. (2025). "Context Engineering for Agents." https://rlancemartin.github.io/2025/06/23/context_engineering/
+
+---
+
+← [Module 7: Message Passing — The Erlang OTP of AI](./07-message-passing.md) | [Course Index →](../index.md)
