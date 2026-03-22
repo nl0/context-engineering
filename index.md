@@ -6,7 +6,7 @@
 
 ---
 
-## Who This Course Is For
+## Who This Book Is For
 
 Software developers, ML engineers, and architects who build applications on top of LLMs — especially agent-based systems. You should be comfortable with API calls to language models and have experience (even brief) with tools like Claude Code, Cursor, Copilot, or LangChain.
 
@@ -16,7 +16,7 @@ The term was popularized in June 2025 by Tobi Lutke (Shopify CEO) — "the art o
 
 ## What You'll Learn
 
-The context window is the single most important resource in any LLM application. It determines what the model knows, how well it reasons, and when it fails. Most developers treat it as a black box. This course treats it as a system to be engineered.
+The context window is the single most important resource in any LLM application. It determines what the model knows, how well it reasons, and when it fails. Most developers treat it as a black box. This book treats it as a system to be engineered.
 
 By the end, you'll be able to:
 
@@ -28,35 +28,35 @@ By the end, you'll be able to:
 
 ---
 
-## Course Modules
+## Chapters
 
 ### Part I: Foundations
 
-| Module | Topic | Lessons |
-|--------|-------|---------|
-| [**1. Tokens and Inference**](./modules/01-tokens-and-inference.md) | How LLMs consume text and why inference is stateless | [1.1 What Are Tokens?](./modules/01-tokens-and-inference.md#lesson-1.1-what-are-tokens) <br>[1.2 Inference Is Stateless](./modules/01-tokens-and-inference.md#lesson-1.2-inference-is-stateless) |
-| [**2. The Real Size of Your Context Window**](./modules/02-context-window-size.md) | Why advertised context lengths are marketing, not engineering | [2.1 Marketing vs. Reality](./modules/02-context-window-size.md#lesson-2.1-marketing-numbers-vs.-engineering-reality) <br>[2.2 Why Models Fail at Length](./modules/02-context-window-size.md#lesson-2.2-why-models-fail-at-length) <br>[2.3 The Smart Zone and the Dumb Zone](./modules/02-context-window-size.md#lesson-2.3-the-smart-zone-and-the-dumb-zone) <br>[2.4 Measuring Your Context Budget](./modules/02-context-window-size.md#lesson-2.4-measuring-your-context-budget) |
+| Chapter | Topic | Sections |
+|---------|-------|----------|
+| [**1. Tokens and Inference**](./modules/01-tokens-and-inference.md) | How LLMs consume text and why inference is stateless | [What Are Tokens?](./modules/01-tokens-and-inference.md#what-are-tokens) <br>[Inference Is Stateless](./modules/01-tokens-and-inference.md#inference-is-stateless) |
+| [**2. The Real Size of Your Context Window**](./modules/02-context-window-size.md) | Why advertised context lengths are marketing, not engineering | [Marketing vs. Reality](./modules/02-context-window-size.md#marketing-numbers-vs.-engineering-reality) <br>[Why Models Fail at Length](./modules/02-context-window-size.md#why-models-fail-at-length) <br>[The Smart Zone and the Dumb Zone](./modules/02-context-window-size.md#the-smart-zone-and-the-dumb-zone) <br>[Measuring Your Context Budget](./modules/02-context-window-size.md#measuring-your-context-budget) |
 
 ### Part II: The Messages Array
 
-| Module | Topic | Lessons |
-|--------|-------|---------|
-| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | [3.1 System Prompt](./modules/03-messages-array.md#lesson-3.1-slot-0-the-system-prompt) <br>[3.2 Harness Prompt](./modules/03-messages-array.md#lesson-3.2-slot-1-the-harness-prompt) <br>[3.3 Project Context Files](./modules/03-messages-array.md#lesson-3.3-slot-2-project-context-files) <br>[3.4 MCP Servers and Tools](./modules/03-messages-array.md#lesson-3.4-slot-3-mcp-servers-and-agent-skills) <br>[3.5 Your Prompt](./modules/03-messages-array.md#lesson-3.5-slot-4-your-prompt) |
-| [**4. Dynamic Allocation — Tool Calling**](./modules/04-tool-calling.md) | How tool calls grow context and what it costs | [4.1 Tool Calls as Memory Allocations](./modules/04-tool-calling.md#lesson-4.1-tool-calls-as-memory-allocations) <br>[4.2 A Real Agent Session](./modules/04-tool-calling.md#lesson-4.2-a-real-agent-session) |
+| Chapter | Topic | Sections |
+|---------|-------|----------|
+| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | [System Prompt](./modules/03-messages-array.md#slot-0-the-system-prompt) <br>[Harness Prompt](./modules/03-messages-array.md#slot-1-the-harness-prompt) <br>[Project Context Files](./modules/03-messages-array.md#slot-2-project-context-files) <br>[MCP Servers and Tools](./modules/03-messages-array.md#slot-3-mcp-servers-and-agent-skills) <br>[Your Prompt](./modules/03-messages-array.md#slot-4-your-prompt) |
+| [**4. Dynamic Allocation — Tool Calling**](./modules/04-tool-calling.md) | How tool calls grow context and what it costs | [Tool Calls as Memory Allocations](./modules/04-tool-calling.md#tool-calls-as-memory-allocations) <br>[A Real Agent Session](./modules/04-tool-calling.md#a-real-agent-session) |
 
 ### Part III: Scaling Patterns
 
-| Module | Topic | Lessons |
-|--------|-------|---------|
-| [**5. Sub-Agents — Managed Runtimes for AI**](./modules/05-sub-agents.md) | Context isolation through disposable child windows | [5.1 Not About Personas](./modules/05-sub-agents.md#lesson-5.1-sub-agents-are-not-about-personas) <br>[5.2 The Test Runner Problem](./modules/05-sub-agents.md#lesson-5.2-the-test-runner-problem) <br>[5.3 Designing Boundaries](./modules/05-sub-agents.md#lesson-5.3-designing-sub-agent-boundaries) |
-| [**6. Message Passing — The Erlang OTP of AI**](./modules/06-message-passing.md) | Context windows as actors with message-passing semantics | [6.1 Context Windows Are Actors](./modules/06-message-passing.md#lesson-6.1-context-windows-are-actors) <br>[6.2 Designing the Message Protocol](./modules/06-message-passing.md#lesson-6.2-designing-the-message-protocol) <br>[6.3 Supervision and Failure](./modules/06-message-passing.md#lesson-6.3-supervision-and-failure) |
+| Chapter | Topic | Sections |
+|---------|-------|----------|
+| [**5. Sub-Agents — Managed Runtimes for AI**](./modules/05-sub-agents.md) | Context isolation through disposable child windows | [Not About Personas](./modules/05-sub-agents.md#sub-agents-are-not-about-personas) <br>[The Test Runner Problem](./modules/05-sub-agents.md#the-test-runner-problem) <br>[Designing Boundaries](./modules/05-sub-agents.md#designing-sub-agent-boundaries) |
+| [**6. Message Passing — The Erlang OTP of AI**](./modules/06-message-passing.md) | Context windows as actors with message-passing semantics | [Context Windows Are Actors](./modules/06-message-passing.md#context-windows-are-actors) <br>[Designing the Message Protocol](./modules/06-message-passing.md#designing-the-message-protocol) <br>[Supervision and Failure](./modules/06-message-passing.md#supervision-and-failure) |
 
 ### Part IV: Architecture
 
-| Module | Topic | Lessons |
-|--------|-------|---------|
-| [**7. The Ralph Wiggum Loop**](./modules/07-ralph-wiggum-loop.md) | Crash-only agent design — fresh-context iteration for autonomous coding | [7.1 What Is It?](./modules/07-ralph-wiggum-loop.md#lesson-7.1-what-is-the-ralph-wiggum-loop) <br>[7.2 The Three-Phase Funnel](./modules/07-ralph-wiggum-loop.md#lesson-7.2-the-three-phase-funnel) <br>[7.3 Specs and Plans](./modules/07-ralph-wiggum-loop.md#lesson-7.3-specs-and-plans-the-persistent-memory) <br>[7.4 Backpressure](./modules/07-ralph-wiggum-loop.md#lesson-7.4-backpressure-and-guardrails) <br>[7.5 Greenfield vs. Brownfield](./modules/07-ralph-wiggum-loop.md#lesson-7.5-greenfield-vs.-brownfield) <br>[7.6 Failure Modes](./modules/07-ralph-wiggum-loop.md#lesson-7.6-failure-modes-and-criticisms) |
-| [**8. Context Management Strategies**](./modules/08-context-management.md) | Memory management for LLMs — allocation, compaction, and beyond | [8.1 The malloc Without free](./modules/08-context-management.md#lesson-8.1-the-malloc-without-free) <br>[8.2 Why Compaction Is Dangerous](./modules/08-context-management.md#lesson-8.2-why-compaction-is-dangerous) <br>[8.3 Better Strategies](./modules/08-context-management.md#lesson-8.3-better-strategies) |
+| Chapter | Topic | Sections |
+|---------|-------|----------|
+| [**7. The Ralph Wiggum Loop**](./modules/07-ralph-wiggum-loop.md) | Crash-only agent design — fresh-context iteration for autonomous coding | [What Is It?](./modules/07-ralph-wiggum-loop.md#what-is-the-ralph-wiggum-loop) <br>[The Three-Phase Funnel](./modules/07-ralph-wiggum-loop.md#the-three-phase-funnel) <br>[Specs and Plans](./modules/07-ralph-wiggum-loop.md#specs-and-plans-the-persistent-memory) <br>[Backpressure](./modules/07-ralph-wiggum-loop.md#backpressure-and-guardrails) <br>[Greenfield vs. Brownfield](./modules/07-ralph-wiggum-loop.md#greenfield-vs.-brownfield) <br>[Failure Modes](./modules/07-ralph-wiggum-loop.md#failure-modes-and-criticisms) |
+| [**8. Context Management Strategies**](./modules/08-context-management.md) | Memory management for LLMs — allocation, compaction, and beyond | [The malloc Without free](./modules/08-context-management.md#the-malloc-without-free) <br>[Why Compaction Is Dangerous](./modules/08-context-management.md#why-compaction-is-dangerous) <br>[Better Strategies](./modules/08-context-management.md#better-strategies) |
 
 ---
 
@@ -64,22 +64,22 @@ By the end, you'll be able to:
 
 Treat the context window as you would treat memory in a systems programming language: **a finite, precious resource that requires deliberate management.**
 
-The techniques in this course — from token budgeting to sub-agent isolation to supervision trees — are the context engineering equivalent of the memory management discipline that separates reliable systems from fragile ones.
+The techniques in this book — from token budgeting to sub-agent isolation to supervision trees — are the context engineering equivalent of the memory management discipline that separates reliable systems from fragile ones.
 
 ---
 
-## How to Read This Course
+## How to Read This Book
 
-- **Sequential**: Modules build on each other. Module 1's token economics inform Module 2's budget calculations, which inform Module 3's slot analysis, and so on.
-- **Reference**: Each module is self-contained enough to revisit independently. Cross-references link to prerequisite concepts.
+- **Sequential**: Chapters build on each other. Chapter 1's token economics inform Chapter 2's budget calculations, which inform Chapter 3's slot analysis, and so on.
+- **Reference**: Each chapter is self-contained enough to revisit independently. Cross-references link to prerequisite concepts.
 - **Practical**: Every concept is tied to concrete numbers, real examples, and actionable patterns. No theory without application.
-- **PDF**: The full course is available as a [PDF download](/Context-Engineering.pdf) for offline reading.
+- **PDF**: The full book is available as a [PDF download](/Context-Engineering.pdf) for offline reading.
 
 ---
 
 ## Credits
 
-Written by [Claude](https://claude.ai) (Anthropic), directed and edited by a human author. Course outline from [Latent Patterns](https://latentpatterns.com/courses/context-engineering). See [publication history](history.md) for details.
+Written by [Claude](https://claude.ai) (Anthropic), directed and edited by a human author. Outline from [Latent Patterns](https://latentpatterns.com/courses/context-engineering). See [publication history](history.md) for details.
 
 Licensed under [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
 
@@ -90,7 +90,6 @@ Licensed under [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
 ### Papers
 - Hsieh, C.-P., et al. (2024). "RULER: What's the Real Context Size of Your Long-Context Language Models?" [arXiv:2404.06654](https://arxiv.org/abs/2404.06654)
 - Liu, N. F., et al. (2023). "Lost in the Middle: How Language Models Use Long Contexts." [arXiv:2307.03172](https://arxiv.org/abs/2307.03172)
-- Sennrich, R., Haddow, B., & Birch, A. (2016). "Neural Machine Translation of Rare Words with Subword Units." ACL 2016.
 - Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." [arXiv:2005.11401](https://arxiv.org/abs/2005.11401)
 - Packer, C., et al. (2023). "MemGPT: Towards LLMs as Operating Systems." [arXiv:2310.08560](https://arxiv.org/abs/2310.08560)
 - Paulsen, T. (2025). "Context Is What You Need: The Maximum Effective Context Window." [arXiv:2509.21361](https://arxiv.org/abs/2509.21361)

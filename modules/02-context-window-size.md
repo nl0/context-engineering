@@ -1,6 +1,6 @@
-# Module 2: The Real Size of Your Context Window
+# Chapter 2: The Real Size of Your Context Window
 
-## Lesson 2.1: Marketing Numbers vs. Engineering Reality
+## Marketing Numbers vs. Engineering Reality
 
 Model providers advertise context windows of 128K, 200K, 1M, even 10M tokens. These numbers represent the theoretical maximum input the model can accept. They do not represent the context size at which the model performs well. The gap between advertised and effective context is substantial, and understanding it is essential.
 
@@ -17,7 +17,7 @@ The key finding from RULER is striking: of 17 models tested claiming 32K+ contex
 
 The practical takeaway is clear. A 200K-token model might perform reliably only up to ~65-100K tokens for complex tasks. A 128K model might degrade noticeably past 50K. The advertised number is the ceiling, not the floor.
 
-## Lesson 2.2: Why Models Fail at Length
+## Why Models Fail at Length
 
 Transformer attention is theoretically over all tokens, but in practice, models develop biases. They attend more strongly to tokens at the beginning (primacy) and end (recency) of context. This **attention degradation** is the root cause of long-context failures.
 
@@ -36,7 +36,7 @@ In practice, these academic failure modes show up as recognizable **practitioner
 
 These are not hypothetical. They are the everyday experience of developers using coding agents.
 
-## Lesson 2.3: The Smart Zone and the Dumb Zone
+## The Smart Zone and the Dumb Zone
 
 The core concept here is to divide the context window into two regions. **The Smart Zone** is the portion of the context window where the model performs reliably — typically the first ~40-50% of the advertised context length. **The Dumb Zone** is the remaining capacity where performance degrades progressively. The model still accepts tokens, but reasoning quality, instruction following, and retrieval accuracy decline.
 
@@ -50,9 +50,9 @@ Research from Chroma Research (2025) confirms this degradation is real and unive
 
 Recognizing when your agent has crossed into the dumb zone is a practical skill. The signs include: repeating actions it already took, forgetting instructions from earlier in the conversation, making errors on tasks it handled correctly earlier, "hallucinating" about what happened in the session, and tool calls becoming less targeted and more exploratory.
 
-When you detect dumb-zone behavior, the answer is not "give it more context." The answer is to reset: start a fresh context window with only the essential state. This is the foundation of patterns we'll cover in [Module 5](./05-sub-agents.md), [Module 6](./06-message-passing.md), and [Module 7](./07-ralph-wiggum-loop.md).
+When you detect dumb-zone behavior, the answer is not "give it more context." The answer is to reset: start a fresh context window with only the essential state. This is the foundation of patterns we'll cover in [Chapter 5](./05-sub-agents.md), [Chapter 6](./06-message-passing.md), and [Chapter 7](./07-ralph-wiggum-loop.md).
 
-## Lesson 2.4: Measuring Your Context Budget
+## Measuring Your Context Budget
 
 Your **context budget** is your total available tokens minus all fixed allocations. This is what's actually available for the dynamic parts of your application — the conversation, tool results, and reasoning.
 
@@ -73,7 +73,7 @@ Here's a worked example with Claude Sonnet 4.6 (200K window):
 | Tool definitions (15 tools) | −5,000 |
 | **Effective budget** | **68,500** |
 
-That's your real budget for conversation + tool results + reasoning. It sounds like a lot — until a single file read returns 5,000 tokens, a test run dumps 10,000 tokens, and you're 10 exchanges deep. Budget awareness must be designed into your agent, not bolted on after. This is why sub-agents ([Module 5](./05-sub-agents.md)) and fresh-context patterns ([Module 7](./07-ralph-wiggum-loop.md)) exist.
+That's your real budget for conversation + tool results + reasoning. It sounds like a lot — until a single file read returns 5,000 tokens, a test run dumps 10,000 tokens, and you're 10 exchanges deep. Budget awareness must be designed into your agent, not bolted on after. This is why sub-agents ([Chapter 5](./05-sub-agents.md)) and fresh-context patterns ([Chapter 7](./07-ralph-wiggum-loop.md)) exist.
 
 ## Key Takeaways
 

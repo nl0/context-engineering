@@ -1,6 +1,6 @@
-# Module 8: Context Management Strategies
+# Chapter 8: Context Management Strategies
 
-## Lesson 8.1: The `malloc` Without `free`
+## The `malloc` Without `free`
 
 **The memory management analogy** makes the problem concrete. In C, `malloc()` allocates memory and `free()` releases it. Context engineering has `malloc` — you can add messages, tool results, and context to the array. But there is no `free`. Once a message is in the array, it stays there for the rest of the session. (Technically you could remove messages from the array before sending, but most frameworks don't support this, and doing it naively breaks conversational coherence.)
 
@@ -19,11 +19,11 @@ This matters because in traditional programming, memory leaks are bugs. In LLM c
 
 The three "memory management" primitives we DO have:
 
-1. **Don't allocate**: Avoid putting things in context that aren't needed (use sub-agents — [Module 5](./05-sub-agents.md))
-2. **Compact**: Summarize old messages to reduce their token count (lossy — see Lesson 8.2)
-3. **Reset**: Start a fresh context window with curated state (the Ralph Wiggum Loop — [Module 7](./07-ralph-wiggum-loop.md))
+1. **Don't allocate**: Avoid putting things in context that aren't needed (use sub-agents — [Chapter 5](./05-sub-agents.md))
+2. **Compact**: Summarize old messages to reduce their token count (lossy — see below)
+3. **Reset**: Start a fresh context window with curated state (the Ralph Wiggum Loop — [Chapter 7](./07-ralph-wiggum-loop.md))
 
-## Lesson 8.2: Why Compaction Is Dangerous
+## Why Compaction Is Dangerous
 
 **Compaction** (also called context compression or summarization) replaces older messages in the array with a shorter summary. For example, 20 messages of conversation (5,000 tokens) might be compressed to a 500-token summary.
 
@@ -35,19 +35,19 @@ The core danger is **non-deterministic eviction**. You can't control what the mo
 
 Real failure scenarios illustrate the risk. **Lost constraints**: "Use only the existing API endpoints" gets compacted away, and the agent creates new endpoints. **Lost context**: A critical error message from an earlier tool call is summarized as "encountered some errors," and the specific error information is gone. **Lost decisions**: "We decided to use approach B because approach A had race conditions" gets compacted to "using approach B," so the next iteration doesn't know why and might revisit approach A. **Merged context**: Information from separate tool calls gets merged in the summary, creating false associations.
 
-The fundamental problem is that compaction is lossy compression performed by the same model that's already struggling with context management. You're asking a model that loses information in long contexts to decide what information is safe to discard. This is asking the fox to guard the henhouse. As Huntley puts it in the Ralph Wiggum Loop ([Module 7](./07-ralph-wiggum-loop.md)): "Compaction is the devil." Here's why he's right. The model performing the compression has no ground truth about what matters downstream — it's making a bet, and every bet it loses destroys information you can never recover. The only safe compaction is the kind you control explicitly, with protected categories and priority tags (see Strategy 3 below).
+The fundamental problem is that compaction is lossy compression performed by the same model that's already struggling with context management. You're asking a model that loses information in long contexts to decide what information is safe to discard. This is asking the fox to guard the henhouse. As Huntley puts it in the Ralph Wiggum Loop ([Chapter 7](./07-ralph-wiggum-loop.md)): "Compaction is the devil." Here's why he's right. The model performing the compression has no ground truth about what matters downstream — it's making a bet, and every bet it loses destroys information you can never recover. The only safe compaction is the kind you control explicitly, with protected categories and priority tags (see Strategy 3 below).
 
-## Lesson 8.3: Better Strategies
+## Better Strategies
 
 Given the dangers of compaction, what should you actually do?
 
 ### Strategy 1: Prevention Over Cure (Sub-Agent Delegation)
 
-The best strategy is to prevent context bloat in the first place. Delegate high-token operations to sub-agents ([Module 5](./05-sub-agents.md)) and only receive summaries in the parent context. This is like avoiding memory allocation rather than trying to free it later.
+The best strategy is to prevent context bloat in the first place. Delegate high-token operations to sub-agents ([Chapter 5](./05-sub-agents.md)) and only receive summaries in the parent context. This is like avoiding memory allocation rather than trying to free it later.
 
 ### Strategy 2: Fresh Context with Curated State (The Ralph Wiggum Loop)
 
-When context accumulation is inevitable, reset deliberately. Write critical state to a persistent file (spec/plan), start a fresh context window, and load only what's needed ([Module 7](./07-ralph-wiggum-loop.md)). This is the closest thing to `free()` — you're starting with a clean heap.
+When context accumulation is inevitable, reset deliberately. Write critical state to a persistent file (spec/plan), start a fresh context window, and load only what's needed ([Chapter 7](./07-ralph-wiggum-loop.md)). This is the closest thing to `free()` — you're starting with a clean heap.
 
 ### Strategy 3: Priority-Based Eviction
 
@@ -97,7 +97,7 @@ The model forgot the coding style guidelines from turn 2 — they didn't survive
 ```
 The context manager explicitly dropped 45 turns of history. It kept what matters: instructions, current state, and the immediate task. Token count is controlled. Critical context is preserved.
 
-This pattern also directly solves the Lost-in-the-Middle problem from [Module 2](./02-context-window-size.md). Recall the U-shaped attention curve: models attend most strongly to tokens at the beginning (primacy) and end (recency) of the context window, while information buried in the middle gets the least attention. The Context Manager exploits this by pinning critical state — system prompts, style guidelines, constraints — to the top of the assembled context (primacy zone) and placing the current task and latest tool output at the bottom (recency zone). Everything in between is expendable working memory. Instead of hoping important information survives the middle of a bloated conversation log, you guarantee it lands where the model actually looks.
+This pattern also directly solves the Lost-in-the-Middle problem from [Chapter 2](./02-context-window-size.md). Recall the U-shaped attention curve: models attend most strongly to tokens at the beginning (primacy) and end (recency) of the context window, while information buried in the middle gets the least attention. The Context Manager exploits this by pinning critical state — system prompts, style guidelines, constraints — to the top of the assembled context (primacy zone) and placing the current task and latest tool output at the bottom (recency zone). Everything in between is expendable working memory. Instead of hoping important information survives the middle of a bloated conversation log, you guarantee it lands where the model actually looks.
 
 This is the difference between treating context as "a conversation log" and treating it as "a dynamically assembled working set."
 

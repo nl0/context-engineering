@@ -1,6 +1,6 @@
-# Module 4: Dynamic Allocation — Tool Calling
+# Chapter 4: Dynamic Allocation — Tool Calling
 
-## Lesson 4.1: Tool Calls as Memory Allocations
+## Tool Calls as Memory Allocations
 
 If the messages array is memory, then every tool call is a `malloc()`. Each tool interaction adds at minimum three entries to the array:
 
@@ -72,9 +72,9 @@ To visualize how the array grows during a typical interaction:
 [assistant: "All tests pass."]      → 80 tokens     (cumulative: 19,660)
 ```
 
-In just one bug fix cycle: ~15,000 tokens of dynamic context consumed. That's ~22% of a 68K effective budget (from [Module 2's](./02-context-window-size.md) calculation) — gone in one task.
+In just one bug fix cycle: ~15,000 tokens of dynamic context consumed. That's ~22% of a 68K effective budget (from [Chapter 2's](./02-context-window-size.md) calculation) — gone in one task.
 
-## Lesson 4.2: A Real Agent Session
+## A Real Agent Session
 
 Consider what happens when an agent handles a more complex request — say, "Add user authentication to this Express app." A realistic multi-task session unfolds in four phases.
 
@@ -86,9 +86,9 @@ Consider what happens when an agent handles a more complex request — say, "Add
 
 **Phase 4: Cleanup** rounds out the session with the model now deep in context. Updating the README adds ~500 tokens, and a final test run produces another ~5,000 tokens. Running total: ~33,700 new tokens.
 
-The **total context at end** is ~11,500 (fixed allocations from [Module 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
+The **total context at end** is ~11,500 (fixed allocations from [Chapter 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
 
-Notice where context pressure hits hardest: **test output**. Testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 5](./05-sub-agents.md) introduces the solution: sub-agents for test running.)
+Notice where context pressure hits hardest: **test output**. Testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Chapter 5](./05-sub-agents.md) introduces the solution: sub-agents for test running.)
 
 ### Signs of session degradation
 
@@ -100,7 +100,7 @@ When a session starts running long, you'll see predictable symptoms:
 4. It starts apologizing and "trying again" without changing approach
 5. Code quality drops — more bugs, less coherent architecture
 
-When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Module 7](./07-ralph-wiggum-loop.md).
+When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Chapter 7](./07-ralph-wiggum-loop.md).
 
 ## Key Takeaways
 

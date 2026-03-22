@@ -1,8 +1,8 @@
-# Module 3: Anatomy of the Messages Array
+# Chapter 3: Anatomy of the Messages Array
 
-This module walks through the messages array slot by slot, from index 0 to the end. Think of it as a memory layout — each slot has a purpose and a cost.
+This chapter walks through the messages array slot by slot, from index 0 to the end. Think of it as a memory layout — each slot has a purpose and a cost.
 
-## Lesson 3.1: Slot 0 — The System Prompt
+## Slot 0 — The System Prompt
 
 The **system prompt** is the model's standing instructions — who it is, how it should behave, what constraints apply. In OpenAI's API, this is a message with `role: "system"` (or `role: "developer"` in newer models). In Anthropic's Claude API, it's a top-level `system` parameter separate from the messages array. Either way, it occupies the same conceptual slot: the first thing the model sees.
 
@@ -14,7 +14,7 @@ That cost adds up quickly. A 2,000-token system prompt on a model charging $3/M 
 
 Watch out for common anti-patterns: repeating the same instruction 3 different ways "for emphasis" (wastes tokens, doesn't help), including examples that could be retrieved on-demand instead, and stuffing knowledge that should be in a retrieval system.
 
-## Lesson 3.2: Slot 1 — The Harness Prompt
+## Slot 1 — The Harness Prompt
 
 When you use an agent framework or tool (Claude Code, Cursor, Copilot, LangChain, etc.), the framework injects its own instructions into the messages array. This is the **harness prompt**. You typically don't see it, but it's consuming your context.
 
@@ -26,7 +26,7 @@ The harness prompt is a "hidden tax" on your context budget. If you're building 
 
 Most frameworks don't expose the harness prompt directly, so inspecting it requires some effort. You can ask the model "What are your system instructions?" (unreliable), intercept API calls with a proxy, read the framework's source code (for open-source tools), or check token usage — if your prompt is 100 tokens but the API reports 3,000 input tokens, the harness is the difference.
 
-## Lesson 3.3: Slot 2 — Project Context Files
+## Slot 2 — Project Context Files
 
 **Project context files** are project-specific instructions that are automatically discovered and injected into context. Every major tool has its own variant — `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex CLI, an open standard), `.cursorrules` (Cursor), `.github/copilot-instructions.md` (Copilot). They tell the model about your specific project — conventions, architecture, key patterns.
 
@@ -62,7 +62,7 @@ Conversely, you should exclude information the model can discover by reading fil
 
 A 2026 study from ETH Zurich evaluating AGENTS.md files found a surprising result: LLM-generated context files actually *decreased* task success rates by ~3% and increased costs by 20%+. Human-written files improved success by ~4% — but only when limited to information the agent genuinely can't infer from the codebase. The takeaway: context files that merely restate discoverable information (architecture overviews, directory structures) add cost without benefit. Include only non-discoverable, operationally significant information: custom build commands, project-specific gotchas, unconventional patterns.
 
-## Lesson 3.4: Slot 3 — MCP Servers and Agent Skills
+## Slot 3 — MCP Servers and Agent Skills
 
 **MCP (Model Context Protocol)** is a standard protocol for exposing tools (functions the model can call) and resources (data the model can read) to LLMs. Tool definitions are JSON schemas that describe available functions, their parameters, and expected behavior.
 
@@ -96,11 +96,11 @@ This doesn't change the context engineering picture — cached tokens still cons
 
 Manus's production experience reinforces this: use append-only context with deterministic serialization. Even a single-token change in the prefix invalidates everything after it. Their practices include keeping system prompt + tools + project context in a stable prefix, adding conversation turns only at the end, and explicitly marking cache breakpoints. With Claude Sonnet, the difference is 10x: $0.30/MTok cached vs $3/MTok uncached.
 
-## Lesson 3.5: Slot 4 — Your Prompt
+## Slot 4 — Your Prompt
 
 After system prompt, harness, project context, and tool definitions are allocated, the remaining space is your actual context budget — for the user's prompt, conversation history, and tool results.
 
-Revisiting the budget calculation from [Module 2](./02-context-window-size.md), here's what a heavier tool setup looks like:
+Revisiting the budget calculation from [Chapter 2](./02-context-window-size.md), here's what a heavier tool setup looks like:
 
 | Allocation | Tokens |
 |---|---:|

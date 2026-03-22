@@ -5,7 +5,7 @@ project:
 book:
   title: "Context Engineering"
   subtitle: "Master the art of managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies."
-  author: "Based on the course outline from latentpatterns.com"
+  author: "Based on the outline from latentpatterns.com"
   date: "March 2026"
   date-format: "MMMM YYYY"
   page-navigation: true

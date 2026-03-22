@@ -1,6 +1,6 @@
-# Module 1: Tokens and Inference
+# Chapter 1: Tokens and Inference
 
-## Lesson 1.1: What Are Tokens?
+## What Are Tokens?
 
 ### Why tokens, not characters
 
@@ -8,18 +8,13 @@ LLMs don't process raw text. Before anything happens, text is split into **token
 
 Everything in context engineering is measured in tokens.
 
-### How BPE (Byte Pair Encoding) works
+Common words like "the" or "hello" become single tokens. Rare words like "defenestration" get split into pieces ("def", "en", "est", "ration" or similar). Different models use different tokenization schemes and vocabulary sizes, so the same text can produce different token counts depending on the model.
 
-The dominant tokenization algorithm is Byte Pair Encoding:
+### Token IDs are just integers
 
-1. Start with individual bytes (256 possible values).
-2. Scan the training corpus. Find the most frequent adjacent pair of tokens.
-3. Merge that pair into a new single token. Add it to the vocabulary.
-4. Repeat thousands of times.
+Under the hood, a language model is a function that takes an array of integers and produces the next integer. That's it. The text you type is converted to token IDs before the model sees it, and the token IDs the model outputs are converted back to text before you see them. The sentence `"Hello, world!"` becomes something like `[9906, 11, 1917, 0]`.
 
-The result: common words like "the" or "hello" become single tokens. Rare words like "defenestration" get split into pieces ("def", "en", "est", "ration" or similar).
-
-Different models use different vocabulary sizes. GPT-2 has ~50,257 tokens, while GPT-4 and cl100k_base use ~100,256 tokens. The underlying implementations — [tiktoken](https://github.com/openai/tiktoken) (OpenAI) and [SentencePiece](https://github.com/google/sentencepiece) (Google) — differ in their specific merges, but the principle is the same.
+This means everything in the context window — your prompt, the system instructions, the conversation history, the tool call results — becomes a single flat stream of integer tokens. The model doesn't "see" the structure you see. It sees numbers.
 
 ### The 4:1 rule of thumb
 
@@ -44,7 +39,7 @@ Consider a few concrete cases. The string `"Hello, world!"` typically becomes 4 
 
 Get in the habit of measuring. Don't guess token counts — compute them.
 
-## Lesson 1.2: Inference Is Stateless
+## Inference Is Stateless
 
 ### The fundamental truth
 
@@ -95,7 +90,7 @@ First, **context is a finite, depletable resource** — not free storage. Every 
 | Llama 4 Scout (Meta) | 10M tokens | — |
 | DeepSeek R1 | 128K tokens | 64K |
 
-These numbers look generous. But as we'll see in [Module 2](./02-context-window-size.md), they are marketing numbers — not engineering reality. Effective context is always smaller than advertised context.
+These numbers look generous. But as we'll see in [Chapter 2](./02-context-window-size.md), they are marketing numbers — not engineering reality. Effective context is always smaller than advertised context.
 
 ## Key Takeaways
 
@@ -106,9 +101,6 @@ These numbers look generous. But as we'll see in [Module 2](./02-context-window-
 
 ## References
 
-- Sennrich, R., Haddow, B., & Birch, A. (2016). "Neural Machine Translation of Rare Words with Subword Units." *ACL 2016.*
 - OpenAI Tokenizer: [https://platform.openai.com/tokenizer](https://platform.openai.com/tokenizer)
 - OpenAI tiktoken library: [https://github.com/openai/tiktoken](https://github.com/openai/tiktoken)
-- Google SentencePiece: [https://github.com/google/sentencepiece](https://github.com/google/sentencepiece)
 - Anthropic API Documentation: [https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
-- Raschka, S. (2025). "BPE From Scratch." [https://sebastianraschka.com/blog/2025/bpe-from-scratch.html](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html)
