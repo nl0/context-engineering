@@ -1,10 +1,10 @@
-# Module 6: Sub-Agents — Managed Runtimes for AI
+# Module 5: Sub-Agents — Managed Runtimes for AI
 
-← [Module 5: The Ralph Wiggum Loop](./05-ralph-wiggum-loop.md) | [Module 7: Message Passing — The Erlang OTP of AI →](./07-message-passing.md)
+← [Module 4: Tool Calling](./04-tool-calling.md) | [Module 6: Message Passing — The Erlang OTP of AI →](./06-message-passing.md)
 
 ---
 
-## Lesson 6.1: Sub-Agents Are Not About Personas
+## Lesson 5.1: Sub-Agents Are Not About Personas
 
 When people hear "multi-agent," they typically think of role-playing — "one agent is the architect, another is the coder, another is the reviewer." This is the wrong mental model. Personas are a prompt engineering trick. Sub-agents solve a systems engineering problem.
 
@@ -26,7 +26,7 @@ The analogy that best captures this is managed runtimes or containers. Each sub-
 
 This matters enormously for context engineering. Without sub-agents, every operation's full output enters the parent's context and stays there. With sub-agents, the parent only pays for the summary. This is the single most effective technique for extending how much work an agent can do in a session.
 
-## Lesson 6.2: The Test Runner Problem
+## Lesson 5.2: The Test Runner Problem
 
 Consider the problem in concrete terms: running a test suite from an agent session.
 
@@ -64,7 +64,7 @@ The parent doesn't need to know HOW the work was done — just the result.
 
 Test running is just the canonical example. Other high-token operations benefit from sub-agent delegation in the same way. **Large file analysis** — "Read these 5 files and tell me which ones handle authentication" — lets the sub-agent read all files while the parent gets just a list. **Code search** — "Find all usages of the deprecated API" — lets the sub-agent search while the parent gets locations. **Documentation generation** — "Write docs for this module" — lets the sub-agent read code and write docs while the parent gets confirmation. **Dependency analysis** — "What are the security vulnerabilities in our dependencies?" — lets the sub-agent run the audit while the parent gets a summary.
 
-## Lesson 6.3: Designing Sub-Agent Boundaries
+## Lesson 5.3: Designing Sub-Agent Boundaries
 
 The key question for delegation is: "Will this operation produce output I don't need verbatim in the parent context?" If yes, delegate to a sub-agent. If no — for example, a small file edit where you need to see the exact result — run it directly.
 
@@ -131,4 +131,4 @@ Cognition's **Flappy Bird example** makes this concrete: they asked parallel sub
 
 ---
 
-← [Module 5: The Ralph Wiggum Loop](./05-ralph-wiggum-loop.md) | [Module 7: Message Passing — The Erlang OTP of AI →](./07-message-passing.md)
+← [Module 4: Tool Calling](./04-tool-calling.md) | [Module 6: Message Passing — The Erlang OTP of AI →](./06-message-passing.md)

@@ -14,9 +14,9 @@ MODULE_FILES = [
     "02-context-window-size.md",
     "03-messages-array.md",
     "04-tool-calling.md",
-    "05-ralph-wiggum-loop.md",
-    "06-sub-agents.md",
-    "07-message-passing.md",
+    "05-sub-agents.md",
+    "06-message-passing.md",
+    "07-ralph-wiggum-loop.md",
     "08-context-management.md",
 ]
 

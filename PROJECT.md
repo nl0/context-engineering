@@ -17,9 +17,9 @@ context-engineering-course/
 │   ├── 02-context-window-size.md         # RULER, lost-in-middle, smart/dumb zones, budgets
 │   ├── 03-messages-array.md              # 5 slots: system, harness, project context, MCP, prompt
 │   ├── 04-tool-calling.md                # Tool call token costs, session walkthrough
-│   ├── 05-ralph-wiggum-loop.md           # Three-phase funnel, specs, backpressure, brownfield
-│   ├── 06-sub-agents.md                  # Context isolation, test runner, read/write distinction
-│   ├── 07-message-passing.md             # Erlang OTP analogy, protocols, supervision trees
+│   ├── 05-sub-agents.md                  # Context isolation, test runner, read/write distinction
+│   ├── 06-message-passing.md             # Erlang OTP analogy, protocols, supervision trees
+│   ├── 07-ralph-wiggum-loop.md           # Crash-only design, three-phase funnel, specs, backpressure
 │   └── 08-context-management.md          # malloc/free, compaction, 6 strategies, course summary
 ├── build_pdf.py                          # Concatenates modules, runs pandoc + tectonic
 ├── header.tex                            # LaTeX header (fancyhdr for running headers/footers)

@@ -54,7 +54,7 @@ Research from Chroma Research (2025) confirms this degradation is real and unive
 
 Recognizing when your agent has crossed into the dumb zone is a practical skill. The signs include: repeating actions it already took, forgetting instructions from earlier in the conversation, making errors on tasks it handled correctly earlier, "hallucinating" about what happened in the session, and tool calls becoming less targeted and more exploratory.
 
-When you detect dumb-zone behavior, the answer is not "give it more context." The answer is to reset: start a fresh context window with only the essential state. This is the foundation of patterns we'll cover in [Module 5](./05-ralph-wiggum-loop.md), [Module 6](./06-sub-agents.md), and [Module 7](./07-message-passing.md).
+When you detect dumb-zone behavior, the answer is not "give it more context." The answer is to reset: start a fresh context window with only the essential state. This is the foundation of patterns we'll cover in [Module 5](./05-sub-agents.md), [Module 6](./06-message-passing.md), and [Module 7](./07-ralph-wiggum-loop.md).
 
 ## Lesson 2.4: Measuring Your Context Budget
 
@@ -80,7 +80,7 @@ Tool definitions (15 tools): −5,000
 Effective budget:           68,500 tokens
 ```
 
-That's your real budget for conversation + tool results + reasoning. It sounds like a lot — until a single file read returns 5,000 tokens, a test run dumps 10,000 tokens, and you're 10 exchanges deep. Budget awareness must be designed into your agent, not bolted on after. This is why sub-agents ([Module 6](./06-sub-agents.md)) and fresh-context patterns ([Module 5](./05-ralph-wiggum-loop.md)) exist.
+That's your real budget for conversation + tool results + reasoning. It sounds like a lot — until a single file read returns 5,000 tokens, a test run dumps 10,000 tokens, and you're 10 exchanges deep. Budget awareness must be designed into your agent, not bolted on after. This is why sub-agents ([Module 5](./05-sub-agents.md)) and fresh-context patterns ([Module 7](./07-ralph-wiggum-loop.md)) exist.
 
 ## Key Takeaways
 

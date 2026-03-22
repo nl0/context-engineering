@@ -1,6 +1,6 @@
 # Module 4: Dynamic Allocation — Tool Calling
 
-← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: The Ralph Wiggum Loop →](./05-ralph-wiggum-loop.md)
+← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: Sub-Agents — Managed Runtimes for AI →](./05-sub-agents.md)
 
 ---
 
@@ -92,7 +92,7 @@ Consider what happens when an agent handles a more complex request — say, "Add
 
 The **total context at end** is ~11,500 (fixed allocations from [Module 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
 
-Notice where context pressure hits hardest: **test output**. Testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 6](./06-sub-agents.md) introduces the solution: sub-agents for test running.)
+Notice where context pressure hits hardest: **test output**. Testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 5](./05-sub-agents.md) introduces the solution: sub-agents for test running.)
 
 ### Signs of session degradation
 
@@ -104,7 +104,7 @@ When a session starts running long, you'll see predictable symptoms:
 4. It starts apologizing and "trying again" without changing approach
 5. Code quality drops — more bugs, less coherent architecture
 
-When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Module 5](./05-ralph-wiggum-loop.md).
+When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Module 7](./07-ralph-wiggum-loop.md).
 
 ## Key Takeaways
 
@@ -123,4 +123,4 @@ When you notice these signs, the most productive action is often to start a new 
 
 ---
 
-← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: The Ralph Wiggum Loop →](./05-ralph-wiggum-loop.md)
+← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: Sub-Agents — Managed Runtimes for AI →](./05-sub-agents.md)

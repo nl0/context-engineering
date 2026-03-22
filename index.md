@@ -48,14 +48,14 @@ By the end, you'll be able to:
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**5. The Ralph Wiggum Loop**](./modules/05-ralph-wiggum-loop.md) | Fresh-context iteration for autonomous coding | 5.1 What Is It? · 5.2 The Three-Phase Funnel · 5.3 Specs and Plans · 5.4 Backpressure · 5.5 Greenfield vs. Brownfield · 5.6 Failure Modes |
-| [**6. Sub-Agents — Managed Runtimes for AI**](./modules/06-sub-agents.md) | Context isolation through disposable child windows | 6.1 Not About Personas · 6.2 The Test Runner Problem · 6.3 Designing Boundaries |
+| [**5. Sub-Agents — Managed Runtimes for AI**](./modules/05-sub-agents.md) | Context isolation through disposable child windows | 5.1 Not About Personas · 5.2 The Test Runner Problem · 5.3 Designing Boundaries |
+| [**6. Message Passing — The Erlang OTP of AI**](./modules/06-message-passing.md) | Context windows as actors with message-passing semantics | 6.1 Context Windows Are Actors · 6.2 Designing the Message Protocol · 6.3 Supervision and Failure |
 
 ### Part IV: Architecture
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**7. Message Passing — The Erlang OTP of AI**](./modules/07-message-passing.md) | Context windows as actors with message-passing semantics | 7.1 Context Windows Are Actors · 7.2 Designing the Message Protocol · 7.3 Supervision and Failure |
+| [**7. The Ralph Wiggum Loop**](./modules/07-ralph-wiggum-loop.md) | Crash-only agent design — fresh-context iteration for autonomous coding | 7.1 What Is It? · 7.2 The Three-Phase Funnel · 7.3 Specs and Plans · 7.4 Backpressure · 7.5 Greenfield vs. Brownfield · 7.6 Failure Modes |
 | [**8. Context Management Strategies**](./modules/08-context-management.md) | Memory management for LLMs — allocation, compaction, and beyond | 8.1 The malloc Without free · 8.2 Why Compaction Is Dangerous · 8.3 Better Strategies |
 
 ---

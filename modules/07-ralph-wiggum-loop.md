@@ -1,10 +1,10 @@
-# Module 5: The Ralph Wiggum Loop
+# Module 7: The Ralph Wiggum Loop
 
-← [Module 4: Dynamic Allocation — Tool Calling](./04-tool-calling.md) | [Module 6: Sub-Agents — Managed Runtimes for AI →](./06-sub-agents.md)
+← [Module 6: Message Passing — Scalable Agent Communication](./06-message-passing.md) | [Module 8: Context Management — Keeping Models Effective →](./08-context-management.md)
 
 ---
 
-## Lesson 5.1: What Is the Ralph Wiggum Loop?
+## Lesson 7.1: What Is the Ralph Wiggum Loop?
 
 The **Ralph Wiggum Loop** was created by Geoffrey Huntley in early 2025 and named after Ralph Wiggum from The Simpsons — a character who lives entirely in the present moment with no memory of what came before. In its purest form, it's a bash loop:
 
@@ -20,7 +20,11 @@ This works because each iteration gets the full smart zone. There's no accumulat
 
 The key insight is that the specification file IS the memory. The context window is disposable. This inverts the usual mental model where people try to preserve the conversation. Instead: preserve the plan, discard the conversation.
 
-## Lesson 5.2: The Three-Phase Funnel
+This is, at heart, a **crash-only design** — a concept from systems programming introduced by Candea and Fox (2003). In crash-only software, you don't write elaborate defensive code to keep a process running forever. Instead, you design the program to crash safely, read its state from durable storage, and restart fresh. The Ralph Loop applies the same principle to AI sessions: the context window is designed to be disposable. It crashes (resets), reads its state from the spec files on disk, and starts fresh with full capability. There is no attempt to gracefully degrade or salvage a deteriorating context.
+
+This connects to the "let it crash" philosophy discussed in Module 6 (Message Passing), drawn from Erlang's supervision trees — but applied at the session level rather than the sub-agent level. An Erlang supervisor restarts a failed child process; the Ralph Loop restarts the entire conversation. Both reject the premise that uptime requires defensive complexity. The alternative — trying to keep a single context window alive through compaction, summarization, and eviction — is the traditional "defensive" approach, and Module 8 covers those strategies. But Huntley's bet is that crashing clean beats degrading gracefully.
+
+## Lesson 7.2: The Three-Phase Funnel
 
 Huntley structures work as three distinct phases, each with its own prompt and loop:
 
@@ -68,7 +72,7 @@ project-root/
 └── src/
 ```
 
-## Lesson 5.3: Specs and Plans — The Persistent Memory
+## Lesson 7.3: Specs and Plans — The Persistent Memory
 
 Since each iteration starts fresh, the specification and plan files must contain everything the agent needs to pick up where the last iteration left off. These files are the only thing that persists between iterations — design them accordingly.
 
@@ -95,7 +99,7 @@ Good specs follow several design principles. They must be **self-contained** —
 
 Plans should be treated as disposable. "A plan that drifts is cheaper to regenerate than to salvage." When reality diverges from the plan, switch back to planning mode and regenerate. Don't try to manually fix a stale plan.
 
-## Lesson 5.4: Backpressure and Guardrails
+## Lesson 7.4: Backpressure and Guardrails
 
 The most underrated aspect of the Ralph Loop isn't the loop itself — it's the environment it runs in.
 
@@ -111,7 +115,7 @@ Always **run in sandboxes** — Docker containers or isolated environments. Hunt
 
 For heavier workloads, **use sub-agents** — up to many parallel sub-agents for reads, but only 1 for build/tests. Serializing validation prevents backpressure collapse — if multiple agents run tests simultaneously, they can't tell whose changes broke what.
 
-## Lesson 5.5: Greenfield vs. Brownfield
+## Lesson 7.5: Greenfield vs. Brownfield
 
 Huntley famously said "There's no way in heck would I use Ralph in an existing code base." This is directionally right — **naive** Ralph on existing code creates duplicates, ignores existing patterns, and causes regressions.
 
@@ -126,9 +130,11 @@ What makes brownfield work is that the research/planning phase must be proportio
 3. **Capture conventions in AGENTS.md**: Build commands, architecture patterns, testing conventions — information the agent can't infer from code alone
 4. **Existing test suites as guardrails**: Brownfield has an advantage here — tests already exist to catch regressions
 
+This connects to the read-vs-write heuristic from Module 5 (Sub-Agents): brownfield work involves heavy writes into an existing codebase, which resist parallelization. Greenfield projects can fan out reads and even writes across sub-agents because there's no shared mutable state to conflict with. Brownfield, by contrast, demands serial iteration — exactly what the Ralph Loop provides.
+
 Without this approach, the agent "ignored the notes that these were descriptions of existing classes, it just took them as a new specification and generated them all over again, creating duplicates" (Thoughtworks evaluation of spec-kit).
 
-## Lesson 5.6: Failure Modes and Criticisms
+## Lesson 7.6: Failure Modes and Criticisms
 
 The Ralph Loop is not a silver bullet. Know its failure modes:
 
@@ -167,6 +173,7 @@ Practitioners discovered specific phrasings that trigger better agent behavior:
 
 ## References
 
+- Candea, G. & Fox, A. (2003). "Crash-Only Software." 9th Workshop on Hot Topics in Operating Systems (HotOS IX).
 - Huntley, G. (2025). "Ralph Wiggum as a 'Software Engineer.'" https://ghuntley.com/ralph/
 - Huntley, G. (2025). "Everything is a Ralph Loop." https://ghuntley.com/loop/
 - Huntley, G. (2025). "How to Ralph Wiggum." https://github.com/ghuntley/how-to-ralph-wiggum
@@ -181,4 +188,4 @@ Practitioners discovered specific phrasings that trigger better agent behavior:
 
 ---
 
-← [Module 4: Dynamic Allocation — Tool Calling](./04-tool-calling.md) | [Module 6: Sub-Agents — Managed Runtimes for AI →](./06-sub-agents.md)
+← [Module 6: Message Passing — Scalable Agent Communication](./06-message-passing.md) | [Module 8: Context Management — Keeping Models Effective →](./08-context-management.md)

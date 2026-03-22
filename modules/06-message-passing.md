@@ -1,10 +1,10 @@
-# Module 7: Message Passing — The Erlang OTP of AI
+# Module 6: Message Passing — The Erlang OTP of AI
 
-← [Module 6: Sub-Agents — Managed Runtimes for AI](./06-sub-agents.md) | [Module 8: Context Management Strategies →](./08-context-management.md)
+← [Module 5: Sub-Agents — Managed Runtimes for AI](./05-sub-agents.md) | [Module 7: The Ralph Wiggum Loop →](./07-ralph-wiggum-loop.md)
 
 ---
 
-## Lesson 7.1: Context Windows Are Actors
+## Lesson 6.1: Context Windows Are Actors
 
 Erlang, created by Ericsson in the 1980s for telecom systems, introduced a powerful concurrency model known as the **Erlang OTP actor model**. In this model, **processes** (actors) are lightweight and isolated — they share nothing. **Communication** happens exclusively through message passing, with no shared memory. Processes can spawn child processes, creating hierarchies. And failure is expected — processes crash, and supervisors restart them. This model has powered systems achieving 99.9999999% uptime (the "nine nines" — notably Ericsson's AXD 301 ATM switch).
 
@@ -27,7 +27,7 @@ The "no shared memory" constraint is real. Two context windows cannot share stat
 
 Data transfer between agents follows **copy semantics**. When you send data to a sub-agent, you're copying it. The sub-agent gets its own version. If the sub-agent modifies its understanding, the parent doesn't know unless the sub-agent explicitly sends back a message. This is exactly how Erlang works: messages are copied, never referenced.
 
-## Lesson 7.2: Designing the Message Protocol
+## Lesson 6.2: Designing the Message Protocol
 
 The **inbound message** (parent to sub-agent) is the sub-agent's prompt — the task description. Design it like an API contract.
 
@@ -97,7 +97,7 @@ FAILURES:
 NOTES: <any relevant observations, max 2 sentences>
 ```
 
-## Lesson 7.3: Supervision and Failure
+## Lesson 6.3: Supervision and Failure
 
 Erlang's **"let it crash" philosophy** says: don't write defensive code to prevent every possible failure inside a process. Instead, let processes crash and have supervisors that detect the crash and restart the process. This produces simpler, more reliable code than trying to handle every edge case.
 
@@ -169,4 +169,4 @@ The most important property of this architecture is **failure isolation**: a sub
 
 ---
 
-← [Module 6: Sub-Agents — Managed Runtimes for AI](./06-sub-agents.md) | [Module 8: Context Management Strategies →](./08-context-management.md)
+← [Module 5: Sub-Agents — Managed Runtimes for AI](./05-sub-agents.md) | [Module 7: The Ralph Wiggum Loop →](./07-ralph-wiggum-loop.md)
