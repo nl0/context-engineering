@@ -1,9 +1,5 @@
 # Module 2: The Real Size of Your Context Window
 
-← [Module 1: Tokens and Inference](./01-tokens-and-inference.md) | [Module 3: Anatomy of the Messages Array →](./03-messages-array.md)
-
----
-
 ## Lesson 2.1: Marketing Numbers vs. Engineering Reality
 
 Model providers advertise context windows of 128K, 200K, 1M, even 10M tokens. These numbers represent the theoretical maximum input the model can accept. They do not represent the context size at which the model performs well. The gap between advertised and effective context is substantial, and understanding it is essential.
@@ -98,7 +94,3 @@ That's your real budget for conversation + tool results + reasoning. It sounds l
 - Li, Y., et al. (2024). "Long-context LLMs Struggle with Long In-context Learning." arXiv:2404.02060.
 - Chroma Research. (2025). "Context Rot: How Increasing Input Tokens Impacts LLM Performance." https://research.trychroma.com/context-rot
 - Paulsen, T. (2025). "Context Is What You Need: The Maximum Effective Context Window." arXiv:2509.21361.
-
----
-
-← [Module 1: Tokens and Inference](./01-tokens-and-inference.md) | [Module 3: Anatomy of the Messages Array →](./03-messages-array.md)

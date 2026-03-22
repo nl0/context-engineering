@@ -1,9 +1,5 @@
 # Module 4: Dynamic Allocation — Tool Calling
 
-← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: Sub-Agents — Managed Runtimes for AI →](./05-sub-agents.md)
-
----
-
 ## Lesson 4.1: Tool Calls as Memory Allocations
 
 If the messages array is memory, then every tool call is a `malloc()`. Each tool interaction adds at minimum three entries to the array:
@@ -120,7 +116,3 @@ When you notice these signs, the most productive action is often to start a new 
 - OpenAI. "Function Calling Guide." https://platform.openai.com/docs/guides/function-calling
 - Schick, T., et al. (2023). "Toolformer: Language Models Can Teach Themselves to Use Tools." arXiv:2302.04761.
 - Patil, S., et al. (2023). "Gorilla: Large Language Model Connected with Massive APIs." arXiv:2305.15334.
-
----
-
-← [Module 3: Anatomy of the Messages Array](./03-messages-array.md) | [Module 5: Sub-Agents — Managed Runtimes for AI →](./05-sub-agents.md)

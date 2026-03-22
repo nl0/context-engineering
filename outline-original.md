@@ -1,4 +1,6 @@
-# Context Engineering — Course Outline
+# Context Engineering — Original Course Outline
+
+> **Note:** This is the original outline captured from the source website before the course was written. It is preserved here for provenance. The actual course structure has evolved — see [index.md](./index.md) for the current module listing.
 
 > Master the art of managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies.
 

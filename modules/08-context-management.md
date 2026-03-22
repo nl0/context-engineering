@@ -1,9 +1,5 @@
 # Module 8: Context Management Strategies
 
-← [Module 7: The Ralph Wiggum Loop](./07-ralph-wiggum-loop.md) | [Course Index →](../index.md)
-
----
-
 ## Lesson 8.1: The `malloc` Without `free`
 
 **The memory management analogy** makes the problem concrete. In C, `malloc()` allocates memory and `free()` releases it. Context engineering has `malloc` — you can add messages, tool results, and context to the array. But there is no `free`. Once a message is in the array, it stays there for the rest of the session. (Technically you could remove messages from the array before sending, but most frameworks don't support this, and doing it naively breaks conversational coherence.)
@@ -143,7 +139,3 @@ The central insight: **treat the context window as you would treat memory in a s
 - Manus. "Context Engineering for AI Agents: Lessons from Building Manus." https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
 - JetBrains Research. (2025). "Efficient Context Management for Coding Agents." https://blog.jetbrains.com/research/2025/12/efficient-context-management/
 - Martin, L. (2025). "Context Engineering for Agents." https://rlancemartin.github.io/2025/06/23/context_engineering/
-
----
-
-← [Module 7: The Ralph Wiggum Loop](./07-ralph-wiggum-loop.md) | [Course Index →](../index.md)

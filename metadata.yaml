@@ -1,0 +1,28 @@
+---
+title: "Context Engineering"
+subtitle: |
+  Master the art of managing what goes into a language model's
+  context window — from tokens and system prompts to tool calls
+  and memory strategies.
+author: "Based on the course outline from latentpatterns.com"
+date: "2026"
+documentclass: report
+classoption:
+  - 11pt
+  - letterpaper
+  - portrait
+geometry:
+  - top=1in
+  - bottom=1in
+  - left=1in
+  - right=1in
+fontfamily: libertinus
+monofont: "Courier New"
+linestretch: 1.3
+toc: true
+toc-depth: 2
+highlight-style: kate
+colorlinks: true
+linkcolor: "black"
+urlcolor: "blue"
+---

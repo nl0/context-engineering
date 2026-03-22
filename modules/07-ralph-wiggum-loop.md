@@ -1,9 +1,5 @@
 # Module 7: The Ralph Wiggum Loop
 
-← [Module 6: Message Passing — Scalable Agent Communication](./06-message-passing.md) | [Module 8: Context Management — Keeping Models Effective →](./08-context-management.md)
-
----
-
 ## Lesson 7.1: What Is the Ralph Wiggum Loop?
 
 The **Ralph Wiggum Loop** was created by Geoffrey Huntley in early 2025 and named after Ralph Wiggum from The Simpsons — a character who lives entirely in the present moment with no memory of what came before. In its purest form, it's a bash loop:
@@ -185,7 +181,3 @@ Practitioners discovered specific phrasings that trigger better agent behavior:
 - Osmani, A. (2025). "How to Write a Good Spec for AI Agents." https://addyosmani.com/blog/good-spec/
 - Thoughtworks. (2025). "Spec-Driven Development." Technology Radar. https://www.thoughtworks.com/en-us/radar/techniques/spec-driven-development
 - METR. (2025). "Measuring the Impact of AI on Software Engineering Tasks."
-
----
-
-← [Module 6: Message Passing — Scalable Agent Communication](./06-message-passing.md) | [Module 8: Context Management — Keeping Models Effective →](./08-context-management.md)

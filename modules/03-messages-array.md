@@ -1,9 +1,5 @@
 # Module 3: Anatomy of the Messages Array
 
-← [Module 2: The Real Size of Your Context Window](./02-context-window-size.md) | [Module 4: Dynamic Allocation — Tool Calling →](./04-tool-calling.md)
-
----
-
 This module walks through the messages array slot by slot, from index 0 to the end. Think of it as a memory layout — each slot has a purpose and a cost.
 
 ## Lesson 3.1: Slot 0 — The System Prompt
@@ -138,7 +134,3 @@ This leads to the golden rule of context-aware prompt design: don't put in conte
 - Cursor. ".cursorrules Documentation." https://docs.cursor.com
 - GitHub Copilot. "Customizing Copilot Instructions." https://docs.github.com/en/copilot/customizing-copilot
 - MMNTM. "The MCP Tax: Hidden Costs of Model Context Protocol." https://www.mmntm.net/articles/mcp-context-tax
-
----
-
-← [Module 2: The Real Size of Your Context Window](./02-context-window-size.md) | [Module 4: Dynamic Allocation — Tool Calling →](./04-tool-calling.md)

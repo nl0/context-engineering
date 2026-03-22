@@ -1,9 +1,5 @@
 # Module 1: Tokens and Inference
 
-← [Course Index](../index.md) | [Module 2: The Real Size of Your Context Window →](./02-context-window-size.md)
-
----
-
 ## Lesson 1.1: What Are Tokens?
 
 ### Why tokens, not characters
@@ -122,7 +118,3 @@ These numbers look generous. But as we'll see in [Module 2](./02-context-window-
 - Google SentencePiece: [https://github.com/google/sentencepiece](https://github.com/google/sentencepiece)
 - Anthropic API Documentation: [https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
 - Raschka, S. (2025). "BPE From Scratch." [https://sebastianraschka.com/blog/2025/bpe-from-scratch.html](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html)
-
----
-
-← [Course Index](../index.md) | [Module 2: The Real Size of Your Context Window →](./02-context-window-size.md)

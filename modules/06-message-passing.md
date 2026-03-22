@@ -1,9 +1,5 @@
 # Module 6: Message Passing — The Erlang OTP of AI
 
-← [Module 5: Sub-Agents — Managed Runtimes for AI](./05-sub-agents.md) | [Module 7: The Ralph Wiggum Loop →](./07-ralph-wiggum-loop.md)
-
----
-
 ## Lesson 6.1: Context Windows Are Actors
 
 Erlang, created by Ericsson in the 1980s for telecom systems, introduced a powerful concurrency model known as the **Erlang OTP actor model**. In this model, **processes** (actors) are lightweight and isolated — they share nothing. **Communication** happens exclusively through message passing, with no shared memory. Processes can spawn child processes, creating hierarchies. And failure is expected — processes crash, and supervisors restart them. This model has powered systems achieving 99.9999999% uptime (the "nine nines" — notably Ericsson's AXD 301 ATM switch).
@@ -166,7 +162,3 @@ The most important property of this architecture is **failure isolation**: a sub
 - Agha, G. (1986). *Actors: A Model of Concurrent Computation in Distributed Systems*. MIT Press.
 - Manus. "Context Engineering for AI Agents." https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
 - Schmid, P. (2025). "Context Engineering Part 2." https://www.philschmid.de/context-engineering-part-2
-
----
-
-← [Module 5: Sub-Agents — Managed Runtimes for AI](./05-sub-agents.md) | [Module 7: The Ralph Wiggum Loop →](./07-ralph-wiggum-loop.md)

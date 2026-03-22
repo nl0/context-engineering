@@ -1,9 +1,5 @@
 # Module 5: Sub-Agents — Managed Runtimes for AI
 
-← [Module 4: Tool Calling](./04-tool-calling.md) | [Module 6: Message Passing — The Erlang OTP of AI →](./06-message-passing.md)
-
----
-
 ## Lesson 5.1: Sub-Agents Are Not About Personas
 
 When people hear "multi-agent," they typically think of role-playing — "one agent is the architect, another is the coder, another is the reviewer." This is the wrong mental model. Personas are a prompt engineering trick. Sub-agents solve a systems engineering problem.
@@ -128,7 +124,3 @@ Cognition's **Flappy Bird example** makes this concrete: they asked parallel sub
 - Schmid, P. (2025). "Single vs Multi-Agent System?" https://www.philschmid.de/single-vs-multi-agents
 - Google Research. (2025). "Towards a Science of Scaling Agent Systems." https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/
 - Anthropic. "How We Built Our Multi-Agent Research System." https://www.anthropic.com/engineering/multi-agent-research-system
-
----
-
-← [Module 4: Tool Calling](./04-tool-calling.md) | [Module 6: Message Passing — The Erlang OTP of AI →](./06-message-passing.md)
