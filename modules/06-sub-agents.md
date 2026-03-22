@@ -74,15 +74,16 @@
   - If yes → delegate to sub-agent
   - If no → run directly (e.g., a small file edit where you need to see the exact result)
 
-- **The delegation decision matrix**:
-  | Operation | Expected tokens | Need verbatim? | Decision |
-  |-----------|----------------|----------------|----------|
-  | Read a 50-line config file | ~500 | Yes (need to edit it) | Direct |
-  | Run test suite | 5,000-50,000 | No (need pass/fail) | Sub-agent |
-  | Search codebase for pattern | 2,000-10,000 | No (need locations) | Sub-agent |
-  | Edit a specific function | ~300 | Yes | Direct |
-  | Analyze 10 files for patterns | 10,000-50,000 | No (need findings) | Sub-agent |
-  | Read a single error log | ~200 | Maybe | Direct (small enough) |
+### The Delegation Decision Matrix
+
+| Operation | Expected tokens | Need verbatim? | Decision |
+|-----------|----------------|----------------|----------|
+| Read a 50-line config file | ~500 | Yes (need to edit it) | Direct |
+| Run test suite | 5,000-50,000 | No (need pass/fail) | Sub-agent |
+| Search codebase for pattern | 2,000-10,000 | No (need locations) | Sub-agent |
+| Edit a specific function | ~300 | Yes | Direct |
+| Analyze 10 files for patterns | 10,000-50,000 | No (need findings) | Sub-agent |
+| Read a single error log | ~200 | Maybe | Direct (small enough) |
 
 - **Designing the message interface**:
   - **Inbound** (parent → sub-agent): Be specific about what you need back. "Run the tests and return: (1) pass/fail count, (2) names of any failing tests, (3) the error message for each failure." Don't just say "run the tests."

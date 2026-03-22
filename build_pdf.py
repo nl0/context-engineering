@@ -33,8 +33,12 @@ documentclass: report
 classoption:
   - 11pt
   - letterpaper
+  - portrait
 geometry:
-  - margin=1in
+  - top=1in
+  - bottom=1in
+  - left=1in
+  - right=1in
 fontfamily: libertinus
 monofont: "Courier New"
 linestretch: 1.3
@@ -44,23 +48,6 @@ highlight-style: kate
 colorlinks: true
 linkcolor: "black"
 urlcolor: "blue"
-header-includes:
-  - |
-    \\usepackage{fancyhdr}
-    \\pagestyle{fancy}
-    \\fancyhf{}
-    \\fancyfoot[C]{\\thepage}
-    \\fancyhead[L]{\\small\\textit{Context Engineering}}
-    \\fancyhead[R]{\\small\\textit{\\leftmark}}
-    \\renewcommand{\\headrulewidth}{0.4pt}
-    \\renewcommand{\\footrulewidth}{0pt}
-    \\usepackage{titling}
-    \\pretitle{\\begin{center}\\vspace*{2cm}\\Huge\\bfseries}
-    \\posttitle{\\end{center}\\vspace{1cm}}
-    \\preauthor{\\begin{center}\\large}
-    \\postauthor{\\end{center}}
-    \\predate{\\begin{center}\\large}
-    \\postdate{\\end{center}\\vfill}
 ---
 """
 
@@ -124,12 +111,14 @@ def main():
         tmp_path = f.name
 
     try:
+        header_tex = COURSE_DIR / "header.tex"
         cmd = [
             "pandoc",
             tmp_path,
             "-o", str(output),
             "--pdf-engine=tectonic",
             "--standalone",
+            f"--include-in-header={header_tex}",
         ]
         print(f"Running: {' '.join(cmd)}")
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)

@@ -10,17 +10,20 @@
 
 - **Why this matters**: In traditional programming, memory leaks are bugs. In LLM context management, "leaks" are the default behavior. Every tool call, every file read, every error message — they all accumulate. The context only grows.
 
-- **The comparison**:
-  | Operation | Traditional Memory | Context Window |
-  |-----------|-------------------|----------------|
-  | Allocate | `malloc(size)` | Add a message to the array |
-  | Use | Read/write the pointer | Model attends to the message |
-  | Free | `free(ptr)` | Not available |
-  | Garbage collect | Automatic (in GC languages) | Not available |
-  | Leak | Bug — wastes RAM | Default behavior — wastes context |
-  | Out of memory | Process crashes | Model enters dumb zone |
+### Context Window vs. Traditional Memory
 
-- **The three "memory management" primitives we DO have**:
+| Operation | Traditional Memory | Context Window |
+|-----------|-------------------|----------------|
+| Allocate | `malloc(size)` | Add a message to the array |
+| Use | Read/write the pointer | Model attends to the message |
+| Free | `free(ptr)` | Not available |
+| Garbage collect | Automatic (in GC languages) | Not available |
+| Leak | Bug — wastes RAM | Default behavior — wastes context |
+| Out of memory | Process crashes | Model enters dumb zone |
+
+The three "memory management" primitives we DO have:
+
+1. **Don't allocate**: Avoid putting things in context that aren't needed (use sub-agents — [Module 6](./06-sub-agents.md))
   1. **Don't allocate**: Avoid putting things in context that aren't needed (use sub-agents — [Module 6](./06-sub-agents.md))
   2. **Compact**: Summarize old messages to reduce their token count (lossy — see Lesson 8.2)
   3. **Reset**: Start a fresh context window with curated state (the Ralph Wiggum Loop — [Module 5](./05-ralph-wiggum-loop.md))

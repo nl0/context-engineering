@@ -13,18 +13,18 @@
   - **Failure is expected** — processes crash, supervisors restart them
   - This model has powered systems achieving 99.9999999% uptime (the "nine nines" — notably Ericsson's AXD 301 ATM switch)
 
-- **The mapping to AI agents**:
+### The Mapping to AI Agents
 
-  | Erlang/OTP | AI Agents |
-  |------------|-----------|
-  | Process | Context window |
-  | Process mailbox | Messages array / prompt |
-  | Message passing | Task description → result summary |
-  | No shared memory | Each context window is isolated |
-  | Spawn a child process | Launch a sub-agent |
-  | Process state | Accumulated context within a session |
-  | Process crash | Context window exceeds smart zone / errors out |
-  | Supervisor | Parent agent that manages sub-agents |
+| Erlang/OTP | AI Agents |
+|------------|-----------|
+| Process | Context window |
+| Process mailbox | Messages array / prompt |
+| Message passing | Task description → result summary |
+| No shared memory | Each context window is isolated |
+| Spawn a child process | Launch a sub-agent |
+| Process state | Accumulated context within a session |
+| Process crash | Context window exceeds smart zone / errors out |
+| Supervisor | Parent agent that manages sub-agents |
 
 - **Why this analogy matters**: Erlang solved the same fundamental problem 40 years ago — how do you build reliable systems from unreliable components that can't share state? The answer: isolate them, let them communicate through messages, and design for failure.
 
