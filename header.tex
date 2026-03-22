@@ -2,6 +2,14 @@
 \usepackage[sfdefault]{roboto}
 \usepackage{inconsolata}
 
+% Unicode characters not in Roboto's T1 encoding
+\usepackage{newunicodechar}
+\newunicodechar{→}{$\rightarrow$}
+\newunicodechar{←}{$\leftarrow$}
+\newunicodechar{≈}{$\approx$}
+\newunicodechar{≤}{$\leq$}
+\newunicodechar{≥}{$\geq$}
+
 % Running headers/footers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
