@@ -1,3 +1,9 @@
+---
+layout: default
+title: Home
+nav_order: 0
+---
+
 # Context Engineering
 
 > Master the art of managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies.

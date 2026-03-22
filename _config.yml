@@ -1,9 +1,32 @@
 title: Context Engineering
 description: A course on managing what goes into a language model's context window
-theme: jekyll-theme-primer
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+
+url: https://nl0.github.io
+baseurl: /context-engineering
+
+aux_links:
+  "PDF Download":
+    - "https://github.com/nl0/context-engineering/raw/main/context-engineering-course.pdf"
+  "GitHub":
+    - "https://github.com/nl0/context-engineering"
+
+aux_links_new_tab: true
+
+nav_enabled: true
+search_enabled: true
+
+back_to_top: true
+back_to_top_text: "Back to top"
+
+footer_content: "Based on the outline from <a href=\"https://latentpatterns.com/courses/context-engineering\">latentpatterns.com</a>."
+
 exclude:
   - Dockerfile
   - build
   - header.tex
   - metadata.yaml
+  - outline-original.md
+  - prompt.md
   - "*.pdf"
+  - README.md

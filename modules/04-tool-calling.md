@@ -1,3 +1,9 @@
+---
+layout: default
+title: "4. Tool Calling"
+nav_order: 4
+---
+
 # Module 4: Dynamic Allocation — Tool Calling
 
 ## Lesson 4.1: Tool Calls as Memory Allocations

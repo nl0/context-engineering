@@ -1,3 +1,9 @@
+---
+layout: default
+title: "3. The Messages Array"
+nav_order: 3
+---
+
 # Module 3: Anatomy of the Messages Array
 
 This module walks through the messages array slot by slot, from index 0 to the end. Think of it as a memory layout — each slot has a purpose and a cost.

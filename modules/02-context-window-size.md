@@ -1,3 +1,9 @@
+---
+layout: default
+title: "2. Context Window Size"
+nav_order: 2
+---
+
 # Module 2: The Real Size of Your Context Window
 
 ## Lesson 2.1: Marketing Numbers vs. Engineering Reality
