@@ -68,6 +68,8 @@ project-root/
 
 ## Lesson 5.3: Specs and Plans — The Persistent Memory
 
+Since each iteration starts fresh, the specification and plan files must contain everything the agent needs to pick up where the last iteration left off. These files are the only thing that persists between iterations — design them accordingly.
+
 - **Checkbox-based progress tracking**: Structure the implementation plan as a checklist:
   ```markdown
   ## Implementation Plan

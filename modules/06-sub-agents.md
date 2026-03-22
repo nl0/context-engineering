@@ -117,8 +117,9 @@
 - Sub-agents are about context isolation, not personas.
 - The test runner problem is the canonical example: 15,000 tokens of test output → 200 tokens of summary.
 - Delegate when the operation produces tokens the parent doesn't need verbatim.
+- **Read tasks parallelize well; write tasks don't.** Use sub-agents for research, analysis, and search. Keep code generation and design decisions in the parent.
 - Design explicit message contracts: be specific about what you need back.
-- Sub-agents have overhead — use them when the token savings justify the cost (typically 2,000+ tokens).
+- Sub-agents have real overhead (4-7x tokens for multi-agent) — use them when the token savings justify the cost.
 
 ## References
 

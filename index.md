@@ -48,8 +48,8 @@ By the end, you'll be able to:
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**5. The Ralph Wiggum Loop**](./modules/05-ralph-wiggum-loop.md) | Fresh-context iteration for autonomous coding | 5.1 What Is the Ralph Wiggum Loop? · 5.2 Specs and Plans · 5.3 Three Modes of Ralph |
-| [**6. Sub-Agents — Managed Runtimes for AI**](./modules/06-sub-agents.md) | Context isolation through disposable child windows | 6.1 Not About Personas · 6.2 The Test Runner Problem · 6.3 Designing Sub-Agent Boundaries |
+| [**5. The Ralph Wiggum Loop**](./modules/05-ralph-wiggum-loop.md) | Fresh-context iteration for autonomous coding | 5.1 What Is It? · 5.2 The Three-Phase Funnel · 5.3 Specs and Plans · 5.4 Backpressure · 5.5 Greenfield vs. Brownfield · 5.6 Failure Modes |
+| [**6. Sub-Agents — Managed Runtimes for AI**](./modules/06-sub-agents.md) | Context isolation through disposable child windows | 6.1 Not About Personas · 6.2 The Test Runner Problem · 6.3 Designing Boundaries |
 
 ### Part IV: Architecture
 
@@ -94,9 +94,12 @@ The techniques in this course — from token budgeting to sub-agent isolation to
 
 ### Articles and Blog Posts
 - Anthropic. (2025). ["Effective Context Engineering for AI Agents."](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+- Anthropic. (2025). ["How We Built Our Multi-Agent Research System."](https://www.anthropic.com/engineering/multi-agent-research-system)
 - Huntley, G. (2025). ["Ralph Wiggum as a 'Software Engineer.'"](https://ghuntley.com/ralph/)
+- Farr, C. (2025). ["The Ralph Wiggum Playbook."](https://paddo.dev/blog/ralph-wiggum-playbook/)
 - Manus. (2025). ["Context Engineering for AI Agents."](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus)
 - Cognition. (2025). ["Don't Build Multi-Agents."](https://cognition.ai/blog/dont-build-multi-agents)
+- Schmid, P. (2025). ["Single vs Multi-Agent System?"](https://www.philschmid.de/single-vs-multi-agents)
 - Martin, L. (2025). ["Context Engineering for Agents."](https://rlancemartin.github.io/2025/06/23/context_engineering/)
 
 ### Tools and Documentation

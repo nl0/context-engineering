@@ -150,8 +150,8 @@ Context engineering is the discipline of managing the scarcest resource in AI sy
 2. **Context windows are smaller than advertised** — design for the smart zone, not the marketing number ([Module 2](./02-context-window-size.md))
 3. **The messages array has a fixed-cost structure** — system prompt, harness, project context, and tools consume tokens before your conversation even begins ([Module 3](./03-messages-array.md))
 4. **Tool calls are memory allocations** — they grow context permanently within a session ([Module 4](./04-tool-calling.md))
-5. **Fresh context beats stale context** — the Ralph Wiggum Loop trades continuity for performance ([Module 5](./05-ralph-wiggum-loop.md))
-6. **Sub-agents are context isolators** — delegate work to protect your context budget ([Module 6](./06-sub-agents.md))
+5. **Fresh context beats stale context** — the Ralph Wiggum Loop (Requirements → Planning → Building) uses the filesystem as memory and the context window as disposable compute ([Module 5](./05-ralph-wiggum-loop.md))
+6. **Sub-agents are context isolators** — delegate reads to sub-agents, keep writes centralized ([Module 6](./06-sub-agents.md))
 7. **Message passing is the architecture** — design explicit protocols between context windows ([Module 7](./07-message-passing.md))
 8. **Prevention beats compaction** — avoid filling context rather than trying to compress it after the fact ([Module 8](./08-context-management.md))
 
@@ -160,9 +160,10 @@ The central insight: **treat the context window as you would treat memory in a s
 ## Key Takeaways
 
 - Context management has `malloc` but no `free`. The default is to leak.
-- Compaction is lossy and non-deterministic — the model decides what to discard.
-- Prevention (sub-agents) beats cure (compaction).
-- When you must compact, use priority-based eviction — protect critical context.
+- Compaction is lossy and non-deterministic — the model decides what to discard. Auto-compact fires at ~95% capacity; CLAUDE.md survives because it's re-injected from disk.
+- Prevention (sub-agents) beats cure (compaction). Observation masking beats LLM summarization.
+- When you must compact, use priority-based eviction — protect critical context, keep failed actions visible.
+- All strategies map to four primitives: Write, Select, Compress, Isolate.
 - Emerging patterns (RAG, semantic caching, structured stores) offer alternatives to the linear messages array.
 
 ## References
