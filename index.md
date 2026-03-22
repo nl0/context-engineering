@@ -79,6 +79,23 @@ The techniques in this course — from token budgeting to sub-agent isolation to
 - **Sequential**: Modules build on each other. Module 1's token economics inform Module 2's budget calculations, which inform Module 3's slot analysis, and so on.
 - **Reference**: Each module is self-contained enough to revisit independently. Cross-references link to prerequisite concepts.
 - **Practical**: Every concept is tied to concrete numbers, real examples, and actionable patterns. No theory without application.
+- **PDF**: The full course is available as a [50-page PDF](https://github.com/nl0/context-engineering/raw/main/context-engineering-course.pdf) for offline reading.
+
+---
+
+## Credits
+
+This course was written by [Claude](https://claude.ai) (Anthropic), directed and edited by a human author. The course outline originates from [Latent Patterns](https://latentpatterns.com/courses/context-engineering). Content was developed through deep research into practitioner experiences, academic papers, and production systems — 50+ sources are cited throughout.
+
+### Publication History
+
+- **March 2026** — Initial publication. 8 modules, ~14,000 words.
+- Course structure reviewed and reordered based on external feedback: modules 5-7 swapped to follow a micro-to-macro progression (Sub-Agents → Message Passing → Ralph Wiggum Loop).
+- Crash-only software framing, Lost-in-the-Middle cross-references, and Read/Write parallelism heuristic added during structural review.
+
+### License
+
+This work is licensed under [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/). You are free to share it with attribution.
 
 ---
 
