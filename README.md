@@ -3,7 +3,7 @@
 A course on managing what goes into a language model's context window — from tokens and system prompts to tool calls and memory strategies.
 
 **Read online:** [nl0.github.io/context-engineering](https://nl0.github.io/context-engineering/)
-**Download PDF:** available on the website sidebar
+**Download PDF:** [Context-Engineering.pdf](https://nl0.github.io/context-engineering/Context-Engineering.pdf)
 
 Based on the outline from [latentpatterns.com/courses/context-engineering](https://latentpatterns.com/courses/context-engineering), fleshed out with research into practitioner experiences, academic papers, and production systems.
 
