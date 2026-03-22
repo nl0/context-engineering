@@ -23,23 +23,13 @@ The dominant tokenization algorithm is Byte Pair Encoding:
 
 The result: common words like "the" or "hello" become single tokens. Rare words like "defenestration" get split into pieces ("def", "en", "est", "ration" or similar).
 
-Vocabulary sizes:
-- GPT-2: ~50,257 tokens
-- GPT-4 / cl100k_base: ~100,256 tokens
-
-This is how [tiktoken](https://github.com/openai/tiktoken) (OpenAI) and [SentencePiece](https://github.com/google/sentencepiece) (Google) work at their core. The specific merges differ, but the principle is the same.
+Different models use different vocabulary sizes. GPT-2 has ~50,257 tokens, while GPT-4 and cl100k_base use ~100,256 tokens. The underlying implementations — [tiktoken](https://github.com/openai/tiktoken) (OpenAI) and [SentencePiece](https://github.com/google/sentencepiece) (Google) — differ in their specific merges, but the principle is the same.
 
 ### The 4:1 rule of thumb
 
-In English prose: **1 token ≈ 4 characters ≈ 0.75 words**.
+In English prose, **1 token ≈ 4 characters ≈ 0.75 words**. That means 1,000 tokens cover roughly 750 words, and a 100K-token context holds approximately 75,000 words — about the length of a short novel.
 
-So 1,000 tokens ≈ 750 words. A 100K-token context ≈ roughly 75,000 words ≈ a short novel.
-
-But this ratio varies wildly by content type:
-
-- **Code** is token-dense. Whitespace, punctuation, and rare identifiers (variable names, imports) all fragment into more tokens per character.
-- **Non-English languages** often require more tokens per word. CJK characters, Arabic, and many others tokenize less efficiently because BPE training corpora are English-heavy.
-- **JSON and XML** are extremely token-expensive. Every brace, bracket, quote, colon, and key name eats tokens. Structural overhead can consume 3-5x more tokens than the equivalent data in plain text.
+This ratio varies wildly by content type, though. **Code** is token-dense because whitespace, punctuation, and rare identifiers (variable names, imports) all fragment into more tokens per character. **Non-English languages** often require more tokens per word, since BPE training corpora are English-heavy — CJK characters, Arabic, and many others tokenize less efficiently. **JSON and XML** are extremely token-expensive: every brace, bracket, quote, colon, and key name eats tokens, and structural overhead can consume 3-5x more tokens than the equivalent data in plain text.
 
 ### Why this matters for context engineering
 
@@ -49,9 +39,7 @@ Understanding token economics is the foundation of context engineering. You cann
 
 ### Practical examples
 
-- `"Hello, world!"` → typically 4 tokens (`Hello`, `,`, ` world`, `!`)
-- A typical JSON API response might use 3-5x more tokens than the same data formatted as plain text or markdown
-- The string `{"name": "Alice", "age": 30}` costs more tokens than `Alice, age 30` — and both convey the same information to the model
+Consider a few concrete cases. The string `"Hello, world!"` typically becomes 4 tokens (`Hello`, `,`, ` world`, `!`). A typical JSON API response might use 3-5x more tokens than the same data formatted as plain text or markdown. The string `{"name": "Alice", "age": 30}` costs more tokens than `Alice, age 30` — and both convey the same information to the model.
 
 **Tools for counting tokens:**
 - [OpenAI Tokenizer](https://platform.openai.com/tokenizer) — interactive web tool
@@ -98,10 +86,9 @@ But the implication is critical: **every previous message costs tokens on every 
 
 ### Implications for context engineering
 
-1. **Context is a finite, depletable resource** — not free storage. Every token you add to context is a token you can't use for something else.
-2. **Every token stays forever** unless you actively manage it. Old messages, stale tool results, and irrelevant context don't expire — they accumulate.
-3. **The cost of context is paid on every inference call.** A 10K-token system prompt is charged on every single API call in the conversation.
-4. **This is why context engineering exists:** to manage this scarce resource intelligently. What goes in? What stays? What gets summarized? What gets dropped? These are the core questions.
+These mechanics lead to four consequences that define the discipline.
+
+First, **context is a finite, depletable resource** — not free storage. Every token you add to context is a token you can't use for something else. Second, **every token stays forever** unless you actively manage it. Old messages, stale tool results, and irrelevant context don't expire — they accumulate. Third, **the cost of context is paid on every inference call.** A 10K-token system prompt is charged on every single API call in the conversation. Fourth, and most importantly, **this is why context engineering exists:** to manage this scarce resource intelligently. What goes in? What stays? What gets summarized? What gets dropped? These are the core questions.
 
 ### Current context window sizes (early 2026)
 

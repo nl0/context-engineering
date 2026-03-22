@@ -6,13 +6,13 @@
 
 ## Lesson 4.1: Tool Calls as Memory Allocations
 
-**The analogy**: If the messages array is memory, then every tool call is a `malloc()`. Each tool interaction adds at minimum three entries to the array:
+If the messages array is memory, then every tool call is a `malloc()`. Each tool interaction adds at minimum three entries to the array:
 
 1. The assistant's message containing the tool call (the function name + arguments)
 2. The tool result (returned by your application)
 3. The assistant's response interpreting the result
 
-**Token cost anatomy of a single tool call cycle**:
+The token cost of a single tool call cycle breaks down like this:
 
 ```
 Assistant decides to call a tool:
@@ -31,11 +31,9 @@ Assistant processes the result:
   → 100-500 tokens
 ```
 
-**Total for one tool call: 400-6,000+ tokens.**
+**Total for one tool call: 400-6,000+ tokens.** A single file read can consume as many tokens as the entire system prompt.
 
-A single file read can consume as many tokens as the entire system prompt.
-
-**What this looks like in the actual API payload** — here's the messages array after one tool call cycle:
+To see what this looks like in the actual API payload, here's the messages array after one tool call cycle:
 
 ```json
 [
@@ -55,9 +53,9 @@ A single file read can consume as many tokens as the entire system prompt.
 
 Five messages from one question. And every one of them stays in the array for every subsequent API call. The JSON config content — which the model already interpreted — is re-sent and re-processed on every future turn.
 
-**The accumulation problem**: Tool results are append-only. Once a 3,000-token file is read into context, it stays there for the rest of the session. Read 10 files? That's potentially 30,000 tokens of file content that persists in your context forever (within that session).
+This creates an **accumulation problem**: tool results are append-only. Once a 3,000-token file is read into context, it stays there for the rest of the session. Read 10 files? That's potentially 30,000 tokens of file content that persists in your context forever (within that session).
 
-**Visualizing array growth** during a typical interaction:
+To visualize how the array grows during a typical interaction:
 
 ```
 [system]                            → 1,500 tokens  (cumulative: 1,500)
@@ -82,45 +80,23 @@ In just one bug fix cycle: ~15,000 tokens of dynamic context consumed. That's ~2
 
 ## Lesson 4.2: A Real Agent Session
 
-A realistic multi-task session. What happens when an agent handles a more complex request — say, "Add user authentication to this Express app":
+Consider what happens when an agent handles a more complex request — say, "Add user authentication to this Express app." A realistic multi-task session unfolds in four phases.
 
-**Phase 1: Understanding** (exploring codebase)
-- Search for existing auth patterns → 2,000 tokens
-- Read package.json → 800 tokens
-- Read app.ts → 3,000 tokens
-- Read existing middleware → 2,500 tokens
+**Phase 1: Understanding** covers exploring the codebase. The agent searches for existing auth patterns (~2,000 tokens), reads package.json (~800 tokens), reads app.ts (~3,000 tokens), and reads existing middleware (~2,500 tokens). Running total: ~8,300 new tokens.
 
-Running total: ~8,300 new tokens
+**Phase 2: Implementation** is where code gets written. Creating auth middleware costs ~500 tokens (tool call + result), creating the user model ~400 tokens, updating routes ~600 tokens, and creating the login endpoint ~500 tokens. Running total: ~10,300 new tokens.
 
-**Phase 2: Implementation** (writing code)
-- Create auth middleware → 500 tokens (tool call + result)
-- Create user model → 400 tokens
-- Update routes → 600 tokens
-- Create login endpoint → 500 tokens
+**Phase 3: Testing** is where context pressure really builds. Running tests produces ~5,000 tokens of output. Reading error details adds ~2,000 tokens. A fix costs ~300 tokens, but then re-running tests dumps another ~5,000 tokens. Another fix at ~300 tokens, another test run at ~5,000 tokens. Running total: ~28,200 new tokens.
 
-Running total: ~10,300 new tokens
+**Phase 4: Cleanup** rounds out the session with the model now deep in context. Updating the README adds ~500 tokens, and a final test run produces another ~5,000 tokens. Running total: ~33,700 new tokens.
 
-**Phase 3: Testing** (running and fixing tests)
-- Run tests → 5,000 tokens of output
-- Read error details → 2,000 tokens
-- Fix test → 300 tokens
-- Re-run tests → 5,000 tokens of output
-- Another fix → 300 tokens
-- Re-run tests → 5,000 tokens of output
+The **total context at end** is ~11,500 (fixed allocations from [Module 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
 
-Running total: ~28,200 new tokens
+Notice where context pressure hits hardest: **test output**. Testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 6](./06-sub-agents.md) introduces the solution: sub-agents for test running.)
 
-**Phase 4: Cleanup** (the model is now deep in context)
-- Update README → 500 tokens
-- Final test run → 5,000 tokens
+### Signs of session degradation
 
-Running total: ~33,700 new tokens
-
-**Total context at end**: ~11,500 (fixed allocations from [Module 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
-
-**Where context pressure hits hardest**: Test output. Notice that testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 6](./06-sub-agents.md) introduces the solution: sub-agents for test running.)
-
-**Signs of session degradation**:
+When a session starts running long, you'll see predictable symptoms:
 
 1. The agent re-reads files it already read
 2. It forgets constraints you stated earlier
@@ -128,7 +104,7 @@ Running total: ~33,700 new tokens
 4. It starts apologizing and "trying again" without changing approach
 5. Code quality drops — more bugs, less coherent architecture
 
-**The reset decision**: When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Module 5](./05-ralph-wiggum-loop.md).
+When you notice these signs, the most productive action is often to start a new session, not to "remind" the agent. Reminding adds more tokens to an already-stressed context. Starting fresh (with a well-designed spec) gives the model a clean smart zone to work in. This is the bridge to [Module 5](./05-ralph-wiggum-loop.md).
 
 ## Key Takeaways
 
