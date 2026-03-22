@@ -34,29 +34,29 @@ By the end, you'll be able to:
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**1. Tokens and Inference**](./modules/01-tokens-and-inference.md) | How LLMs consume text and why inference is stateless | 1.1 What Are Tokens? · 1.2 Inference Is Stateless |
-| [**2. The Real Size of Your Context Window**](./modules/02-context-window-size.md) | Why advertised context lengths are marketing, not engineering | 2.1 Marketing vs. Reality · 2.2 Why Models Fail at Length · 2.3 The Smart Zone and the Dumb Zone · 2.4 Measuring Your Context Budget |
+| [**1. Tokens and Inference**](./modules/01-tokens-and-inference.md) | How LLMs consume text and why inference is stateless | [1.1 What Are Tokens?](./modules/01-tokens-and-inference.md#lesson-1.1-what-are-tokens) · [1.2 Inference Is Stateless](./modules/01-tokens-and-inference.md#lesson-1.2-inference-is-stateless) |
+| [**2. The Real Size of Your Context Window**](./modules/02-context-window-size.md) | Why advertised context lengths are marketing, not engineering | [2.1 Marketing vs. Reality](./modules/02-context-window-size.md#lesson-2.1-marketing-numbers-vs.-engineering-reality) · [2.2 Why Models Fail at Length](./modules/02-context-window-size.md#lesson-2.2-why-models-fail-at-length) · [2.3 The Smart Zone and the Dumb Zone](./modules/02-context-window-size.md#lesson-2.3-the-smart-zone-and-the-dumb-zone) · [2.4 Measuring Your Context Budget](./modules/02-context-window-size.md#lesson-2.4-measuring-your-context-budget) |
 
 ### Part II: The Messages Array
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | 3.1 System Prompt · 3.2 Harness Prompt · 3.3 Project Context Files · 3.4 MCP Servers and Tools · 3.5 Your Prompt |
-| [**4. Dynamic Allocation — Tool Calling**](./modules/04-tool-calling.md) | How tool calls grow context and what it costs | 4.1 Tool Calls as Memory Allocations · 4.2 A Real Agent Session |
+| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | [3.1 System Prompt](./modules/03-messages-array.md#lesson-3.1-slot-0-the-system-prompt) · [3.2 Harness Prompt](./modules/03-messages-array.md#lesson-3.2-slot-1-the-harness-prompt) · [3.3 Project Context Files](./modules/03-messages-array.md#lesson-3.3-slot-2-project-context-files) · [3.4 MCP Servers and Tools](./modules/03-messages-array.md#lesson-3.4-slot-3-mcp-servers-and-agent-skills) · [3.5 Your Prompt](./modules/03-messages-array.md#lesson-3.5-slot-4-your-prompt) |
+| [**4. Dynamic Allocation — Tool Calling**](./modules/04-tool-calling.md) | How tool calls grow context and what it costs | [4.1 Tool Calls as Memory Allocations](./modules/04-tool-calling.md#lesson-4.1-tool-calls-as-memory-allocations) · [4.2 A Real Agent Session](./modules/04-tool-calling.md#lesson-4.2-a-real-agent-session) |
 
 ### Part III: Scaling Patterns
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**5. Sub-Agents — Managed Runtimes for AI**](./modules/05-sub-agents.md) | Context isolation through disposable child windows | 5.1 Not About Personas · 5.2 The Test Runner Problem · 5.3 Designing Boundaries |
-| [**6. Message Passing — The Erlang OTP of AI**](./modules/06-message-passing.md) | Context windows as actors with message-passing semantics | 6.1 Context Windows Are Actors · 6.2 Designing the Message Protocol · 6.3 Supervision and Failure |
+| [**5. Sub-Agents — Managed Runtimes for AI**](./modules/05-sub-agents.md) | Context isolation through disposable child windows | [5.1 Not About Personas](./modules/05-sub-agents.md#lesson-5.1-sub-agents-are-not-about-personas) · [5.2 The Test Runner Problem](./modules/05-sub-agents.md#lesson-5.2-the-test-runner-problem) · [5.3 Designing Boundaries](./modules/05-sub-agents.md#lesson-5.3-designing-sub-agent-boundaries) |
+| [**6. Message Passing — The Erlang OTP of AI**](./modules/06-message-passing.md) | Context windows as actors with message-passing semantics | [6.1 Context Windows Are Actors](./modules/06-message-passing.md#lesson-6.1-context-windows-are-actors) · [6.2 Designing the Message Protocol](./modules/06-message-passing.md#lesson-6.2-designing-the-message-protocol) · [6.3 Supervision and Failure](./modules/06-message-passing.md#lesson-6.3-supervision-and-failure) |
 
 ### Part IV: Architecture
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**7. The Ralph Wiggum Loop**](./modules/07-ralph-wiggum-loop.md) | Crash-only agent design — fresh-context iteration for autonomous coding | 7.1 What Is It? · 7.2 The Three-Phase Funnel · 7.3 Specs and Plans · 7.4 Backpressure · 7.5 Greenfield vs. Brownfield · 7.6 Failure Modes |
-| [**8. Context Management Strategies**](./modules/08-context-management.md) | Memory management for LLMs — allocation, compaction, and beyond | 8.1 The malloc Without free · 8.2 Why Compaction Is Dangerous · 8.3 Better Strategies |
+| [**7. The Ralph Wiggum Loop**](./modules/07-ralph-wiggum-loop.md) | Crash-only agent design — fresh-context iteration for autonomous coding | [7.1 What Is It?](./modules/07-ralph-wiggum-loop.md#lesson-7.1-what-is-the-ralph-wiggum-loop) · [7.2 The Three-Phase Funnel](./modules/07-ralph-wiggum-loop.md#lesson-7.2-the-three-phase-funnel) · [7.3 Specs and Plans](./modules/07-ralph-wiggum-loop.md#lesson-7.3-specs-and-plans-the-persistent-memory) · [7.4 Backpressure](./modules/07-ralph-wiggum-loop.md#lesson-7.4-backpressure-and-guardrails) · [7.5 Greenfield vs. Brownfield](./modules/07-ralph-wiggum-loop.md#lesson-7.5-greenfield-vs.-brownfield) · [7.6 Failure Modes](./modules/07-ralph-wiggum-loop.md#lesson-7.6-failure-modes-and-criticisms) |
+| [**8. Context Management Strategies**](./modules/08-context-management.md) | Memory management for LLMs — allocation, compaction, and beyond | [8.1 The malloc Without free](./modules/08-context-management.md#lesson-8.1-the-malloc-without-free) · [8.2 Why Compaction Is Dangerous](./modules/08-context-management.md#lesson-8.2-why-compaction-is-dangerous) · [8.3 Better Strategies](./modules/08-context-management.md#lesson-8.3-better-strategies) |
 
 ---
 
