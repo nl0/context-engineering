@@ -35,6 +35,26 @@ Assistant processes the result:
 
 A single file read can consume as many tokens as the entire system prompt.
 
+**What this looks like in the actual API payload** — here's the messages array after one tool call cycle:
+
+```json
+[
+  {"role": "system", "content": "You are a coding assistant..."},
+  {"role": "user", "content": "What's in config.json?"},
+  {"role": "assistant", "content": [
+    {"type": "tool_use", "id": "call_1", "name": "read_file",
+     "input": {"path": "config.json"}}
+  ]},
+  {"role": "user", "content": [
+    {"type": "tool_result", "tool_use_id": "call_1",
+     "content": "{\n  \"db_host\": \"localhost\",\n  \"db_port\": 5432,\n  \"auth\": {\"provider\": \"oauth2\", \"timeout\": 3600}\n}"}
+  ]},
+  {"role": "assistant", "content": "The config has database settings (localhost:5432) and OAuth2 auth with a 3600s timeout."}
+]
+```
+
+Five messages from one question. And every one of them stays in the array for every subsequent API call. The JSON config content — which the model already interpreted — is re-sent and re-processed on every future turn.
+
 **The accumulation problem**: Tool results are append-only. Once a 3,000-token file is read into context, it stays there for the rest of the session. Read 10 files? That's potentially 30,000 tokens of file content that persists in your context forever (within that session).
 
 **Visualizing array growth** during a typical interaction:
@@ -96,7 +116,7 @@ Running total: ~28,200 new tokens
 
 Running total: ~33,700 new tokens
 
-**Total context at end**: ~12,000 (fixed: system + harness + project context + tools) + 33,700 (dynamic) = **~45,700 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
+**Total context at end**: ~11,500 (fixed allocations from [Module 2](./02-context-window-size.md)) + 33,700 (dynamic) = **~45,200 tokens**. Still in the smart zone for a 200K model, but only for a single feature addition. Two or three more tasks in the same session, and you're in the dumb zone.
 
 **Where context pressure hits hardest**: Test output. Notice that testing alone consumed ~20,000 tokens — more than half the session's dynamic context. Each test run dumps its full output into the array. This is the #1 context pressure point in agent sessions. ([Module 6](./06-sub-agents.md) introduces the solution: sub-agents for test running.)
 

@@ -79,6 +79,8 @@ If you must compact, don't let the model decide what to keep. You decide.
   - Successful tool calls whose results have been acted on
   - Exploratory reads that didn't lead to action
   - Verbose output where only the conclusion matters
+- **Counter-intuitive finding**: Manus (the AI agent company) discovered that **failed actions should stay visible** in context. Leaving wrong turns visible improves behavior — the model performs implicit belief updates and avoids repeating the same mistakes. Evict successful tool output, but keep failure traces.
+- **Observation masking** (JetBrains Research, 2025): Instead of summarizing entire turns, keep the agent's reasoning and actions but replace older tool outputs with placeholder text. A rolling window of ~10 turns of full detail, with older observations masked. This achieved 50%+ cost reduction while actually *improving* solve rates by 2.6% — better than LLM summarization, which paradoxically made agents run 13-15% longer.
 - **Implementation**: Maintain a priority tag on each message. When compaction is triggered, only compact messages tagged as evictable.
 
 ### Strategy 4: Structured Context Stores (Emerging)
@@ -88,7 +90,31 @@ Rather than dumping everything into the linear messages array, use external stru
 - **Semantic caching**: Cache model responses keyed by semantic similarity of the input. If a similar question was answered recently, reuse the cached answer without re-reading source material.
 - **Session state stores**: External key-value stores where agents can `write("auth_approach", "JWT with refresh tokens")` and later `read("auth_approach")`. Persistent memory that doesn't consume context tokens until retrieved.
 
-### Strategy 5: Context-Aware Architecture Design
+### Strategy 5: The Context Manager Pattern
+
+Instead of blindly appending to the messages array, **dynamically construct it on every turn**. Maintain state externally and assemble the prompt from current state each time.
+
+**Without a context manager** (naive append):
+```
+[System prompt]
+[Summary: "The user wanted a Python script. I wrote a function. It had a bug..."]
+[Turn 47]
+[Turn 48]
+```
+The model forgot the coding style guidelines from turn 2 — they didn't survive summarization.
+
+**With a context manager** (dynamic construction):
+```
+[System prompt + style guidelines]          (pinned — always included)
+[Current file: auth.py]                     (working memory — active task)
+[Latest request: "Fix the failing test"]    (current goal)
+[Test output: 1 failure, truncated to key lines]  (tool result — trimmed)
+```
+The context manager explicitly dropped 45 turns of history. It kept what matters: instructions, current state, and the immediate task. Token count is controlled. Critical context is preserved.
+
+This is the difference between treating context as "a conversation log" and treating it as "a dynamically assembled working set."
+
+### Strategy 6: Context-Aware Architecture Design
 
 Design your agent system to minimize context pressure from the start:
 - **Narrow tool outputs**: Configure tools to return minimal output. A test runner that returns only failures (not full pass/fail logs) saves thousands of tokens.

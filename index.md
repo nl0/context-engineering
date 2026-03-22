@@ -37,7 +37,7 @@ By the end, you'll be able to:
 
 | Module | Topic | Lessons |
 |--------|-------|---------|
-| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | 3.1 System Prompt · 3.2 Harness Prompt · 3.3 AGENTS.md · 3.4 MCP Servers and Tools · 3.5 Your Prompt |
+| [**3. Anatomy of the Messages Array**](./modules/03-messages-array.md) | The slot-by-slot structure of what goes into context | 3.1 System Prompt · 3.2 Harness Prompt · 3.3 Project Context Files · 3.4 MCP Servers and Tools · 3.5 Your Prompt |
 | [**4. Dynamic Allocation — Tool Calling**](./modules/04-tool-calling.md) | How tool calls grow context and what it costs | 4.1 Tool Calls as Memory Allocations · 4.2 A Real Agent Session |
 
 ### Part III: Scaling Patterns

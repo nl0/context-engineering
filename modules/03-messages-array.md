@@ -19,7 +19,7 @@ This module walks through the messages array slot by slot, from index 0 to the e
   - Domain-specific knowledge or rules
   - Keep it tight. Every token here is paid on every request.
 
-- **Cost awareness**: A 2,000-token system prompt on a model charging $3/M input tokens, across 1,000 API calls = $6 just for the system prompt. In agent workloads with hundreds of calls per session, system prompt bloat is real cost.
+- **Cost awareness**: A 2,000-token system prompt on a model charging $3/M input tokens, across 1,000 API calls = $6 just for the system prompt. In agent workloads with hundreds of calls per session, system prompt bloat is a real cost.
 
 - **Common anti-patterns**:
   - Repeating the same instruction 3 different ways "for emphasis" (wastes tokens, doesn't help)
@@ -47,9 +47,9 @@ This module walks through the messages array slot by slot, from index 0 to the e
   - Read the framework's source code (for open-source tools)
   - Check token usage — if your prompt is 100 tokens but the API reports 3,000 input tokens, the harness is the difference
 
-## Lesson 3.3: Slot 2 — AGENTS.md (Project Context)
+## Lesson 3.3: Slot 2 — Project Context Files
 
-- **What it is**: Project-specific context files (CLAUDE.md, AGENTS.md, .cursorrules, .github/copilot-instructions.md) that are automatically discovered and injected into context. They tell the model about your specific project — conventions, architecture, key patterns.
+- **What it is**: Project-specific context files that are automatically discovered and injected into context. Every major tool has its own variant — `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex CLI, an open standard), `.cursorrules` (Cursor), `.github/copilot-instructions.md` (Copilot). They tell the model about your specific project — conventions, architecture, key patterns.
 
 - **The discovery hierarchy** (Claude Code example):
   1. `~/.claude/CLAUDE.md` — user-level defaults
@@ -118,6 +118,8 @@ This module walks through the messages array slot by slot, from index 0 to the e
 Fixed allocations (system prompt, harness, tools, project context) are paid on every request — but they don't have to cost full price. Both Anthropic and OpenAI offer **prompt caching**: if the beginning of your input matches a previous request, the cached portion is processed at a steep discount (Anthropic charges cached tokens at ~10% of uncached rate: $0.30/MTok vs $3/MTok for Sonnet).
 
 This doesn't change the context engineering picture — cached tokens still consume context window space. But it dramatically reduces the dollar cost of fixed allocations. The practical implication: optimize your fixed context for signal-per-token (context window efficiency) but also for cache hit rate (cost efficiency). Keep the prefix of your messages array stable across calls — any change invalidates the cache from that point forward.
+
+**Maximizing cache hits** (from Manus's production experience): Use append-only context with deterministic serialization. Even a single-token change in the prefix invalidates everything after it. Practices: keep system prompt + tools + project context in a stable prefix, add conversation turns only at the end, and explicitly mark cache breakpoints. With Claude Sonnet, the difference is 10x: $0.30/MTok cached vs $3/MTok uncached.
 
 ## Lesson 3.5: Slot 4 — Your Prompt
 

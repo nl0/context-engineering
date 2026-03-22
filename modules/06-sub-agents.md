@@ -97,6 +97,8 @@
 
 - **Nesting depth**: Sub-agents can spawn their own sub-agents, but keep it shallow. Each level adds latency and fixed overhead. In practice, 2 levels (parent → child → grandchild) is usually the maximum useful depth.
 
+- **The anti-pattern warning** (Cognition/Devin): Cognition, the team behind Devin, published "Don't Build Multi-Agents" — arguing that parallel sub-agents making independent decisions leads to conflicting implicit choices. Their recommendation: sub-agents should only handle **well-defined questions** (like "run these tests"), never substantive decision-making. Keep decision-making centralized in the parent. Use sub-agents for information gathering and execution, not for planning or architectural choices.
+
 ## Key Takeaways
 
 - Sub-agents are about context isolation, not personas.

@@ -36,6 +36,14 @@ Key finding from RULER: Of 17 models tested claiming 32K+ context, only 4 mainta
 
 **Why this matters for agents**: Agent workloads are exactly the kind of task that triggers these failures. An agent session accumulates tool results, code snippets, error messages, and instructions — all interleaved. The critical instruction from 50 messages ago is exactly the kind of "middle context" that gets lost.
 
+**Practitioner-level failure patterns** — how these academic failure modes show up in real agent sessions:
+
+- **Context poisoning**: The model hallucinates a function name early on. That hallucination stays in context and becomes "ground truth" — the model references its own mistake in later turns, compounding the error.
+- **Instruction attenuation**: As context fills with tool results and code, the system prompt's instructions lose "weight." The model stops following formatting rules, forgets safety constraints, or abandons the original goal.
+- **Context confusion**: Multiple versions of the same file enter context (the original read, then a modified version). The model blends them into a plausible-but-wrong hybrid.
+
+These are not hypothetical. They are the everyday experience of developers using coding agents.
+
 ## Lesson 2.3: The Smart Zone and the Dumb Zone
 
 **The concept**: Divide the context window into two regions:
@@ -48,6 +56,8 @@ Key finding from RULER: Of 17 models tested claiming 32K+ context, only 4 mainta
 - 200K window → target ≤80K of actual context
 - 128K window → target ≤50K of actual context
 - 1M window → target ≤400K of actual context
+
+**Measuring context rot**: Chroma Research (2025) tested 18 frontier models and found that every model degrades as input length increases — there are no exceptions. Their data shows approximately 2% effectiveness loss per 100K tokens added for Claude models (which decayed slowest among those tested). This degradation is continuous, not a cliff — there's no safe length below which context is "free."
 
 **Recognizing dumb zone entry**: Signs that your agent has crossed into the dumb zone:
 
