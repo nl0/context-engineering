@@ -16,6 +16,10 @@ geometry:
   - bottom=1in
   - left=1in
   - right=1in
+mainfont: "Roboto"
+monofont: "Roboto Mono"
+monofontoptions:
+  - Scale=0.85
 linestretch: 1.35
 toc: true
 toc-depth: 2
