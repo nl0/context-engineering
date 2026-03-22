@@ -1,0 +1,34 @@
+{% assign pages = site.pages | where_exp: "p", "p.nav_order != nil" | sort: "nav_order" %}
+{% assign current_index = nil %}
+{% for p in pages %}
+  {% if p.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if current_index != nil %}
+{% assign prev_index = current_index | minus: 1 %}
+{% assign next_index = current_index | plus: 1 %}
+<hr>
+<div style="display: flex; justify-content: space-between; padding: 0.5rem 0 1.5rem;">
+  <div>
+    {% if prev_index >= 0 %}
+      {% assign prev_page = pages[prev_index] %}
+      <a href="{{ prev_page.url | relative_url }}">&larr; {{ prev_page.title }}</a>
+    {% endif %}
+  </div>
+  <div>
+    {% if next_index < pages.size %}
+      {% assign next_page = pages[next_index] %}
+      <a href="{{ next_page.url | relative_url }}">{{ next_page.title }} &rarr;</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<footer class="site-footer">
+  {{ site.footer_content }}
+  <p class="text-small text-grey-dk-000 mb-0">
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a>
+  </p>
+</footer>

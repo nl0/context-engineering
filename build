@@ -14,8 +14,8 @@ docker run --rm -v "$PWD:/course" --entrypoint sh "$IMAGE" -c '
     cd /course
     cat metadata.yaml > /tmp/combined.md
     printf "\n\n" >> /tmp/combined.md
-    for f in modules/[0-9][0-9]-*.md; do
-        cat "$f" >> /tmp/combined.md
+    for f in modules/[0-9][0-9]-*.md history.md; do
+        sed "/^---$/,/^---$/d" "$f" >> /tmp/combined.md
         printf "\n\n" >> /tmp/combined.md
     done
     pandoc /tmp/combined.md \

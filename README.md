@@ -22,7 +22,7 @@ Based on the outline from [latentpatterns.com/courses/context-engineering](https
 
 ## Building the PDF
 
-Requires Docker. The build script concatenates all modules inside a container and runs pandoc + tectonic.
+Requires Docker. Concatenates all modules inside a Docker container and runs pandoc + tectonic.
 
 ```bash
 ./build
